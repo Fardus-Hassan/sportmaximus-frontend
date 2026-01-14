@@ -32,7 +32,7 @@ export default function PageLayout({
         {leftColumn && (
           <aside
             className={`hidden md:block w-1/4 shrink-0 ${
-              stickyLeft ? 'sticky top-3 h-screen overflow-y-auto' : ''
+              stickyLeft ? 'sticky top-20 h-screen overflow-y-auto' : ''
             }`}
           >
             {leftColumn}
@@ -42,7 +42,7 @@ export default function PageLayout({
         {/* Middle Column - Full width on small, flex-1 on medium+ */}
         <main
           className={`w-full md:flex-1 ${
-            stickyMiddle ? 'sticky top-3 h-screen overflow-y-auto' : ''
+            stickyMiddle ? 'sticky top-20 h-screen overflow-y-auto' : ''
           }`}
         >
           {middleColumn}
@@ -52,7 +52,7 @@ export default function PageLayout({
         {rightColumn && (
           <aside
             className={`hidden lg:block w-1/4 shrink-0 ${
-              stickyRight ? 'sticky top-3 h-screen overflow-y-auto' : ''
+              stickyRight ? 'sticky top-20 h-screen overflow-y-auto' : ''
             }`}
           >
             {rightColumn}
@@ -70,7 +70,7 @@ export default function PageLayout({
         {/* Left Column - Large, full width on small */}
         <main
           className={`w-full md:flex-1 ${
-            stickyLeft ? 'sticky top-3 h-screen overflow-y-auto' : ''
+            stickyLeft ? 'sticky top-20 h-screen overflow-y-auto' : ''
           }`}
         >
           {leftColumn}
@@ -80,7 +80,7 @@ export default function PageLayout({
         {rightColumn && (
           <aside
             className={`hidden md:block w-1/4 shrink-0 ${
-              stickyRight ? 'sticky top-3 h-screen overflow-y-auto' : ''
+              stickyRight ? 'sticky top-20 h-screen overflow-y-auto' : ''
             }`}
           >
             {rightColumn}
@@ -99,7 +99,7 @@ export default function PageLayout({
         {leftColumn && (
           <aside
                 className={`hidden md:block w-1/4 shrink-0 ${
-              stickyLeft ? 'sticky top-3 h-screen overflow-y-auto' : ''
+              stickyLeft ? 'sticky top-20 h-screen overflow-y-auto' : ''
             }`}
           >
             {leftColumn}
@@ -109,7 +109,7 @@ export default function PageLayout({
         {/* Right Column - Large, full width on small */}
         <main
           className={`w-full md:flex-1 ${
-            stickyRight ? 'sticky top-3 h-screen overflow-y-auto' : ''
+            stickyRight ? 'sticky top-20 h-screen overflow-y-auto' : ''
           }`}
         >
           {rightColumn}
