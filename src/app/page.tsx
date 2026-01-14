@@ -1,43 +1,159 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import PageLayout from "@/components/PageLayout";
 import Container from "@/components/Container";
 import Footer from "@/components/Footer";
+import SearchBar from "@/components/SearchBar";
+import UserInfoSideBar from "@/components/UserInfoSideBar";
+import ServiceCard from "@/components/ServiceCard";
+import { BookmarkIcon, EditIcon, DocumentIcon, UserIcon } from "@/components/Icons";
 
 export default function Home() {
+  const services = [
+    {
+      id: "service-1",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Natural Glow Makeup Service",
+      serviceDescription:
+        "Professional makeup that enhances your natural beauty. Available for events!",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$50",
+      likes: 51800,
+      comments: 4500,
+      shares: 1900,
+    },
+    {
+      id: "service-2",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Bridal Glam Makeup Package",
+      serviceDescription:
+        "Full bridal glam including trial session, lashes, and on-location service.",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3764011/pexels-photo-3764011.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$120",
+      likes: 71200,
+      comments: 5200,
+      shares: 2300,
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
       <Container className="py-8">
-        <h1 className="text-2xl font-bold mb-6 text-text-primary">
-          PageLayout Test
-        </h1>
-      
-      {/* Three Column Layout Example */}
+
+      {/* Three Column Layout Example with Sidebar */}
       <div className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-text-primary">3 Column Layout (Middle Large, Sides Small)</h2>
         <PageLayout
           layout="three-column"
           stickyLeft={true}
           stickyRight={true}
           leftColumn={
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="font-semibold mb-2">Left Sidebar</h3>
-              <p className="text-sm text-gray-600">This is sticky</p>
-              <div className="space-y-2 mt-4">
-                <div className="p-2 bg-white rounded">Item 1</div>
-                <div className="p-2 bg-white rounded">Item 2</div>
-                <div className="p-2 bg-white rounded">Item 3</div>
-              </div>
-            </div>
+            <UserInfoSideBar
+              role="user"
+              profile={{
+                name: "Sarah Johnson",
+                location: "Dhaka, Bangladesh",
+                distance: "4.5 km",
+                coverImage:
+                  "https://images.pexels.com/photos/210205/pexels-photo-210205.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                avatar:
+                  "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+                description: "Where modern beauty meets neo precision, comfort, confidence, and personalized care.",
+              }}
+              menuItems={[
+                {
+                  id: "edit-profile",
+                  label: "Edit Profile",
+                  icon: <EditIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Edit Profile clicked"),
+                },
+                {
+                  id: "log-out",
+                  label: "Log Out",
+                  icon: <EditIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Log Out clicked"),
+                },
+              ]}
+              onViewProfile={() => console.log("View Profile clicked")}
+            />
           }
           middleColumn={
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <h3 className="font-semibold mb-4">Middle Column (Scrollable)</h3>
-              {Array.from({ length: 20 }).map((_, i) => (
-                <div key={i} className="mb-4 p-4 bg-white rounded">
-                  <p>Content item {i + 1} - This column scrolls</p>
-                </div>
-              ))}
+            <div className="rounded-lg">
+              <div className="mb-6 p-5 shadow-lg rounded-lg bg-white sticky top-0">
+                <SearchBar onSearch={(value) => console.log("Search:", value)} />
+              </div>
+              <div className="mt-6 space-y-6">
+                {services.map((service) => (
+                  <ServiceCard
+                    key={service.id}
+                    businessName={service.businessName}
+                    businessAvatar={service.businessAvatar}
+                    location={service.location}
+                    rating={service.rating}
+                    serviceTitle={service.serviceTitle}
+                    serviceDescription={service.serviceDescription}
+                    media={service.media}
+                    price={service.price}
+                    likes={service.likes}
+                    comments={service.comments}
+                    shares={service.shares}
+                    isLiked={false}
+                    isSaved={false}
+                    onBookNow={() => console.log("Book Now clicked", service.id)}
+                    onLike={() => console.log("Like clicked", service.id)}
+                    onComment={() => console.log("Comment clicked", service.id)}
+                    onShare={() => console.log("Share clicked", service.id)}
+                    onSave={() => console.log("Save clicked", service.id)}
+                  />
+                ))}
+              </div>
             </div>
           }
           rightColumn={
@@ -49,62 +165,6 @@ export default function Home() {
                 <div className="p-2 bg-white rounded">Item B</div>
                 <div className="p-2 bg-white rounded">Item C</div>
               </div>
-            </div>
-          }
-        />
-      </div>
-
-      {/* Two Column Left Large Example */}
-      <div className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-text-primary">2 Column Layout (Left Large, Right Small)</h2>
-        <PageLayout
-          layout="two-column-left-large"
-          stickyRight={true}
-          leftColumn={
-            <div className="bg-green-50 p-6 rounded-lg">
-              <h3 className="font-semibold mb-4">Left Column (Large - Scrollable)</h3>
-              {Array.from({ length: 15 }).map((_, i) => (
-                <div key={i} className="mb-4 p-4 bg-white rounded">
-                  <p>Content {i + 1} - Scrolls here</p>
-                </div>
-              ))}
-            </div>
-          }
-          rightColumn={
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="font-semibold mb-2">Right Sidebar (Sticky)</h3>
-              <p className="text-sm text-gray-600">This stays fixed</p>
-              <div className="mt-4 text-text-primary/60 text-sm">
-                (Logo removed here)
-              </div>
-            </div>
-          }
-        />
-      </div>
-
-      {/* Two Column Right Large Example */}
-      <div className="mb-12">
-        <h2 className="text-xl font-semibold mb-4 text-text-primary">2 Column Layout (Right Large, Left Small)</h2>
-        <PageLayout
-          layout="two-column-right-large"
-          stickyLeft={true}
-          leftColumn={
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="font-semibold mb-2">Left Sidebar (Sticky)</h3>
-              <p className="text-sm text-gray-600">This stays fixed</p>
-              <div className="mt-4 text-text-primary/60 text-sm">
-                (Logo removed here)
-              </div>
-            </div>
-          }
-          rightColumn={
-            <div className="bg-purple-50 p-6 rounded-lg">
-              <h3 className="font-semibold mb-4">Right Column (Large - Scrollable)</h3>
-              {Array.from({ length: 15 }).map((_, i) => (
-                <div key={i} className="mb-4 p-4 bg-white rounded">
-                  <p>Content {i + 1} - Scrolls here</p>
-                </div>
-              ))}
             </div>
           }
         />
