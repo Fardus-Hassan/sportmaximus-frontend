@@ -81,6 +81,356 @@ export default function Home() {
       comments: 5200,
       shares: 2300,
     },
+    {
+      id: "service-1",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Natural Glow Makeup Service",
+      serviceDescription:
+        "Professional makeup that enhances your natural beauty. Available for events!",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$50",
+      likes: 51800,
+      comments: 4500,
+      shares: 1900,
+    },
+    {
+      id: "service-2",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Bridal Glam Makeup Package",
+      serviceDescription:
+        "Full bridal glam including trial session, lashes, and on-location service.",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3764011/pexels-photo-3764011.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$120",
+      likes: 71200,
+      comments: 5200,
+      shares: 2300,
+    },
+    {
+      id: "service-1",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Natural Glow Makeup Service",
+      serviceDescription:
+        "Professional makeup that enhances your natural beauty. Available for events!",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$50",
+      likes: 51800,
+      comments: 4500,
+      shares: 1900,
+    },
+    {
+      id: "service-2",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Bridal Glam Makeup Package",
+      serviceDescription:
+        "Full bridal glam including trial session, lashes, and on-location service.",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3764011/pexels-photo-3764011.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$120",
+      likes: 71200,
+      comments: 5200,
+      shares: 2300,
+    },
+    {
+      id: "service-1",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Natural Glow Makeup Service",
+      serviceDescription:
+        "Professional makeup that enhances your natural beauty. Available for events!",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$50",
+      likes: 51800,
+      comments: 4500,
+      shares: 1900,
+    },
+    {
+      id: "service-2",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Bridal Glam Makeup Package",
+      serviceDescription:
+        "Full bridal glam including trial session, lashes, and on-location service.",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3764011/pexels-photo-3764011.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$120",
+      likes: 71200,
+      comments: 5200,
+      shares: 2300,
+    },
+    {
+      id: "service-1",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Natural Glow Makeup Service",
+      serviceDescription:
+        "Professional makeup that enhances your natural beauty. Available for events!",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$50",
+      likes: 51800,
+      comments: 4500,
+      shares: 1900,
+    },
+    {
+      id: "service-2",
+      businessName: "Velora Beauty Lounge",
+      businessAvatar:
+        "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+      location: "Dhaka, Bangladesh",
+      rating: 4.9,
+      serviceTitle: "Bridal Glam Makeup Package",
+      serviceDescription:
+        "Full bridal glam including trial session, lashes, and on-location service.",
+      media: [
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "video" as const,
+          url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          thumbnail:
+            "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+        {
+          type: "image" as const,
+          url: "https://images.pexels.com/photos/3764011/pexels-photo-3764011.jpeg?auto=compress&cs=tinysrgb&w=800",
+        },
+      ],
+      price: "$120",
+      likes: 71200,
+      comments: 5200,
+      shares: 2300,
+    },
+      {
+        id: "service-1",
+        businessName: "Velora Beauty Lounge",
+        businessAvatar:
+          "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+        location: "Dhaka, Bangladesh",
+        rating: 4.9,
+        serviceTitle: "Natural Glow Makeup Service",
+        serviceDescription:
+          "Professional makeup that enhances your natural beauty. Available for events!",
+        media: [
+          {
+            type: "image" as const,
+            url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+          {
+            type: "image" as const,
+            url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+          {
+            type: "video" as const,
+            url: "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+            thumbnail:
+              "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+          {
+            type: "image" as const,
+            url: "https://images.pexels.com/photos/1820559/pexels-photo-1820559.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+          {
+            type: "image" as const,
+            url: "https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+        ],
+        price: "$50",
+        likes: 51800,
+        comments: 4500,
+        shares: 1900,
+      },
+      {
+        id: "service-2",
+        businessName: "Velora Beauty Lounge",
+        businessAvatar:
+          "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop",
+        location: "Dhaka, Bangladesh",
+        rating: 4.9,
+        serviceTitle: "Bridal Glam Makeup Package",
+        serviceDescription:
+          "Full bridal glam including trial session, lashes, and on-location service.",
+        media: [
+          {
+            type: "image" as const,
+            url: "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+          {
+            type: "video" as const,
+            url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            thumbnail:
+              "https://images.pexels.com/photos/3076511/pexels-photo-3076511.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+          {
+            type: "image" as const,
+            url: "https://images.pexels.com/photos/3764011/pexels-photo-3764011.jpeg?auto=compress&cs=tinysrgb&w=800",
+          },
+        ],
+        price: "$120",
+        likes: 71200,
+        comments: 5200,
+        shares: 2300,
+      },
   ];
 
   return (
@@ -126,7 +476,7 @@ export default function Home() {
           }
           middleColumn={
             <div className="rounded-lg">
-              <div className="mb-6 p-5 shadow-lg rounded-lg bg-white sticky top-0">
+              <div className="mb-6 p-5 shadow-lg rounded-lg bg-white sticky top-0 z-10">
                 <SearchBar onSearch={(value) => console.log("Search:", value)} />
               </div>
               <div className="mt-6 space-y-6">

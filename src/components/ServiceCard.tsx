@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { StarIcon, HeartIcon, CommentIcon, ShareIcon, BookmarkIcon, CalendarIcon, PlayIcon, MuteIcon } from "@/components/Icons";
 
@@ -63,6 +63,44 @@ export default function ServiceCard({
 
   const currentMedia = media[currentMediaIndex];
   const isVideo = currentMedia?.type === "video";
+
+  // Disable body scroll when modal is open (but keep modal scrollable)
+  useEffect(() => {
+    if (isModalOpen) {
+      // Lock body scroll
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      // Prevent Lenis from handling body scroll
+      if (window.lenis) {
+        window.lenis.stop();
+      }
+    } else {
+      // Restore body scroll
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      }
+      // Resume Lenis smooth scroll
+      if (window.lenis) {
+        window.lenis.start();
+      }
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      if (window.lenis) {
+        window.lenis.start();
+      }
+    };
+  }, [isModalOpen]);
 
   const handlePrevious = () => {
     if (currentMediaIndex > 0) {
@@ -353,12 +391,17 @@ export default function ServiceCard({
     </div>
     {isModalOpen && (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 h-screen"
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 h-screen hide-scrollbar modal-overlay"
         onClick={() => setIsModalOpen(false)}
       >
         <div
-          className="max-w-2xl w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-xl bg-white p-6 space-y-4"
+          className="max-w-[592px] w-full max-h-[90vh] overflow-y-auto rounded-2xl shadow-xl bg-white p-6 space-y-4 hide-scrollbar modal-content"
           onClick={(e) => e.stopPropagation()}
+          onWheel={(e) => {
+            // Allow native scroll in modal, prevent Lenis from interfering
+            e.stopPropagation();
+          }}
+          style={{ overscrollBehavior: "contain" }}
         >
           <div className="">
             {/* Header (reuse) */}
