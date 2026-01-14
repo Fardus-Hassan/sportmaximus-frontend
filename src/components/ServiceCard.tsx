@@ -64,14 +64,19 @@ export default function ServiceCard({
   const currentMedia = media[currentMediaIndex];
   const isVideo = currentMedia?.type === "video";
 
-  // Disable body scroll when modal is open (but keep modal scrollable)
+  // Disable body scroll when modal is open (but keep scrollbar visible)
   useEffect(() => {
     if (isModalOpen) {
-      // Lock body scroll
+      // Lock body scroll but keep scrollbar visible
       const scrollY = window.scrollY;
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = "100%";
+      document.body.style.width = "100.8%";
+      document.body.style.overflowY = "scroll"; // Keep scrollbar visible
+      document.body.style.paddingRight = `${scrollbarWidth}px`; // Prevent layout shift
+      
       // Prevent Lenis from handling body scroll
       if (window.lenis) {
         window.lenis.stop();
@@ -82,6 +87,9 @@ export default function ServiceCard({
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.width = "";
+      document.body.style.overflowY = "";
+      document.body.style.paddingRight = "";
+      
       if (scrollY) {
         window.scrollTo(0, parseInt(scrollY || "0") * -1);
       }
@@ -96,6 +104,8 @@ export default function ServiceCard({
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.width = "";
+      document.body.style.overflowY = "";
+      document.body.style.paddingRight = "";
       if (window.lenis) {
         window.lenis.start();
       }
