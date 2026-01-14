@@ -5,7 +5,7 @@ const navItems = ["Home", "Services", "Beauticians", "Appointments"] as const;
 
 export default function Navbar() {
   return (
-    <header className="w-full bg-white border-b border-black/10">
+    <header className="w-full bg-white border-b border-black/10 fixed top-0 left-0 right-0 z-50">
       <Container className="h-16 flex items-center justify-between">
         {/* Left: Logo */}
         <div className="flex items-center gap-3">

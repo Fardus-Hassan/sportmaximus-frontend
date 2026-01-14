@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import SearchBar from "@/components/SearchBar";
 import UserInfoSideBar from "@/components/UserInfoSideBar";
 import ServiceCard from "@/components/ServiceCard";
+import TrendingServices from "@/components/TrendingServices";
 import { BookmarkIcon, EditIcon, DocumentIcon, UserIcon } from "@/components/Icons";
 
 export default function Home() {
@@ -476,10 +477,10 @@ export default function Home() {
           }
           middleColumn={
             <div className="rounded-lg">
-              <div className="mb-6 p-5 shadow-lg rounded-lg bg-white sticky top-0 z-10">
+              <div className="mb-6 p-5 shadow-lg rounded-lg bg-white mt-12">
                 <SearchBar onSearch={(value) => console.log("Search:", value)} />
               </div>
-              <div className="mt-6 space-y-6">
+              <div className="space-y-6">
                 {services.map((service) => (
                   <ServiceCard
                     key={service.id}
@@ -507,15 +508,35 @@ export default function Home() {
             </div>
           }
           rightColumn={
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h3 className="font-semibold mb-2">Right Sidebar</h3>
-              <p className="text-sm text-gray-600">This is sticky</p>
-              <div className="space-y-2 mt-4">
-                <div className="p-2 bg-white rounded">Item A</div>
-                <div className="p-2 bg-white rounded">Item B</div>
-                <div className="p-2 bg-white rounded">Item C</div>
-              </div>
-            </div>
+            <TrendingServices
+              services={[
+                {
+                  id: "trending-1",
+                  serviceName: "Natural Makeup Service",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-2",
+                  serviceName: "Ombre Gel Nails",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-3",
+                  serviceName: "Bridal Makeup",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-4",
+                  serviceName: "Spa Pedicure",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-5",
+                  serviceName: "Acrylic Nails",
+                  providerName: "Velora Beauty Lounge",
+                },
+              ]}
+            />
           }
         />
       </div>
