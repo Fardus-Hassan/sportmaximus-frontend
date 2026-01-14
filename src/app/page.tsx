@@ -1,11 +1,16 @@
-import { Logo } from "@/components/Icons";
+import Navbar from "@/components/Navbar";
 import PageLayout from "@/components/PageLayout";
 import Container from "@/components/Container";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <Container>
-      <h1 className="text-2xl font-bold mb-6 text-text-primary">PageLayout Test</h1>
+    <div className="min-h-screen bg-white">
+      <Navbar />
+      <Container className="py-8">
+        <h1 className="text-2xl font-bold mb-6 text-text-primary">
+          PageLayout Test
+        </h1>
       
       {/* Three Column Layout Example */}
       <div className="mb-12">
@@ -69,7 +74,9 @@ export default function Home() {
             <div className="bg-gray-100 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Right Sidebar (Sticky)</h3>
               <p className="text-sm text-gray-600">This stays fixed</p>
-              <Logo className="w-16 h-16 mx-auto mt-4" />
+              <div className="mt-4 text-text-primary/60 text-sm">
+                (Logo removed here)
+              </div>
             </div>
           }
         />
@@ -85,7 +92,9 @@ export default function Home() {
             <div className="bg-gray-100 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Left Sidebar (Sticky)</h3>
               <p className="text-sm text-gray-600">This stays fixed</p>
-              <Logo className="w-16 h-16 mx-auto mt-4" />
+              <div className="mt-4 text-text-primary/60 text-sm">
+                (Logo removed here)
+              </div>
             </div>
           }
           rightColumn={
@@ -100,6 +109,8 @@ export default function Home() {
           }
         />
       </div>
-    </Container>
+      </Container>
+      <Footer />
+    </div>
   );
 }
