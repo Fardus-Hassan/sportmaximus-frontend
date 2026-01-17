@@ -45,7 +45,7 @@ export default function SignupPage() {
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* First Name & Last Name */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="lg:grid grid-cols-2 gap-4 lg:space-y-0 space-y-4">
           <div>
             <label htmlFor="firstName" className="block text-sm font-medium text-text-primary mb-2">
               First Name
@@ -108,7 +108,7 @@ export default function SignupPage() {
         </div>
 
         {/* Password & Confirm Password */}
-        <div className="grid grid-cols-2 gap-4">
+        <div className="lg:grid grid-cols-2 gap-4 lg:space-y-0 space-y-4">
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-text-primary mb-2">
               Password
