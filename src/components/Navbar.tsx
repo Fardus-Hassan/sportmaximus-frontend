@@ -8,7 +8,7 @@ export default function Navbar() {
     <header className="w-full bg-white border-b border-black/10 fixed top-0 left-0 right-0 z-50">
       <Container className="h-16 flex items-center justify-between">
         {/* Left: Logo */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 xl:w-[25%]">
           <Logo
             width={28}
             height={28}
@@ -21,7 +21,7 @@ export default function Navbar() {
         </div>
 
         {/* Middle: Nav */}
-        <nav className="hidden md:flex items-center gap-10">
+        <nav className="hidden lg:flex items-center justify-center gap-10 xl:w-[50%]">
           {navItems.map((label) => {
             const isActive = label === "Home";
             return (
@@ -37,7 +37,7 @@ export default function Navbar() {
               >
                 {label}
                 {isActive && (
-                  <span className="block mt-3 h-[3px] w-full bg-primary rounded" />
+                  <span className="block h-[3px] w-full bg-primary rounded" />
                 )}
               </a>
             );
@@ -45,7 +45,7 @@ export default function Navbar() {
         </nav>
 
         {/* Right: Actions */}
-        <div className="flex items-center gap-4">
+        <div className="flex justify-end items-center gap-4 xl:w-[25%]">
           <button
             type="button"
             className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/10 bg-white text-text-primary/70 hover:text-text-primary hover:bg-black/3 transition-colors"
