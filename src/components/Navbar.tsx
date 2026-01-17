@@ -272,7 +272,7 @@ export default function Navbar() {
             </div>
 
             {/* Footer Actions */}
-            <div className="p-4 border-t flex justify-center items-center border-black/10 space-y-2 shrink-0">
+            <div className="p-4 border-t flex justify-center items-center border-black/10 shrink-0">
               <Link
                 href="/auth/signup"
                 onClick={() => setIsMobileMenuOpen(false)}
