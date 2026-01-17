@@ -19,3 +19,6 @@ export { default as CalendarIcon } from './CalendarIcon';
 export { default as PlayIcon } from './PlayIcon';
 export { default as MuteIcon } from './MuteIcon';
 export { default as TrendingIcon } from './TrendingIcon';
+export { default as EyeIcon } from './EyeIcon';
+export { default as EyeOffIcon } from './EyeOffIcon';
+export { default as KeyIcon } from './KeyIcon';
