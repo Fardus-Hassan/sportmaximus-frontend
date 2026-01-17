@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/Container";
 import { BellIcon, Logo, MailIcon, MenuIcon, CloseIcon, StarIcon, LocationIcon, UserIcon, BookmarkIcon, EditIcon, DocumentIcon } from "@/components/Icons";
 
@@ -64,7 +65,7 @@ export default function Navbar() {
             {navItems.map((label) => {
               const isActive = label === "Home";
               return (
-                <a
+                <Link
                   key={label}
                   href="#"
                   className={[
@@ -78,7 +79,7 @@ export default function Navbar() {
                   {isActive && (
                     <span className="block h-[3px] w-full bg-primary rounded" />
                   )}
-                </a>
+                </Link>
               );
             })}
           </nav>
@@ -104,19 +105,19 @@ export default function Navbar() {
               </span>
             </button>
 
-            <a
-              href="#"
+            <Link
+              href="/auth/signup"
               className="hidden sm:inline-flex text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
             >
               Sign Up
-            </a>
+            </Link>
 
-            <a
-              href="#"
+            <Link
+              href="/auth/login"
               className="hidden sm:inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
             >
               Log In
-            </a>
+            </Link>
 
             {/* Mobile Menu Button */}
             <button
@@ -232,7 +233,7 @@ export default function Navbar() {
                   {navItems.map((label) => {
                     const isActive = label === "Home";
                     return (
-                      <a
+                      <Link
                         key={label}
                         href="#"
                         onClick={() => setIsMobileMenuOpen(false)}
@@ -244,7 +245,7 @@ export default function Navbar() {
                         ].join(" ")}
                       >
                         {label}
-                      </a>
+                      </Link>
                     );
                   })}
                 </div>
@@ -272,20 +273,20 @@ export default function Navbar() {
 
             {/* Footer Actions */}
             <div className="p-4 border-t flex justify-center items-center border-black/10 space-y-2 shrink-0">
-              <a
-                href="#"
+              <Link
+                href="/auth/signup"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block text-center w-full rounded-lg text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
               >
                 Sign Up
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                href="/auth/login"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block text-center py-2.5 px-4 w-full rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity"
               >
                 Log In
-              </a>
+              </Link>
             </div>
           </div>
         </>
