@@ -16,7 +16,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="w-full max-w-md">
+    <div className="w-full">
       {/* Logo and Brand */}
       <div className="flex items-center justify-center gap-3 mb-6">
         <Logo width={32} height={32} fill="currentColor" className="text-primary" />
@@ -108,7 +108,7 @@ export default function LoginPage() {
 
         {/* Sign Up Link */}
         <p className="text-center text-sm text-text-primary/70">
-          Didn't have an account?{" "}
+          Didn&apos;t have an account?{" "}
           <Link href="/auth/signup" className="font-medium text-primary hover:underline">
             Sign Up
           </Link>
