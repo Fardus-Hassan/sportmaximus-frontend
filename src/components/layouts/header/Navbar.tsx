@@ -3,27 +3,49 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Container from "@/components/Container";
-import { BellIcon, Logo, MailIcon, MenuIcon, CloseIcon, StarIcon, LocationIcon, UserIcon, BookmarkIcon, EditIcon, DocumentIcon } from "@/components/Icons";
+import Container from "@/components/shared/Container";
+import {
+  BellIcon,
+  Logo,
+  MailIcon,
+  MenuIcon,
+  CloseIcon,
+  StarIcon,
+  LocationIcon,
+  UserIcon,
+  BookmarkIcon,
+  EditIcon,
+  DocumentIcon,
+} from "@/components/Icons";
 
 const navItems = ["Home", "Services", "Beauticians", "Appointments"] as const;
 
 // Mock profile data - replace with actual data
 const mockProfile = {
   name: "John Doe",
-  avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200",
+  avatar:
+    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200",
   location: "New York, NY",
   rating: {
     value: 4.8,
     count: 124,
   },
   distance: "2.5 km",
-  description: "Professional beautician with 5+ years of experience in nail art and styling.",
+  description:
+    "Professional beautician with 5+ years of experience in nail art and styling.",
 };
 
 const menuItems = [
-  { id: "bookmarks", label: "Bookmarks", icon: <BookmarkIcon width={20} height={20} fill="currentColor" /> },
-  { id: "edit", label: "Edit Profile", icon: <EditIcon width={20} height={20} fill="currentColor" /> },
+  {
+    id: "bookmarks",
+    label: "Bookmarks",
+    icon: <BookmarkIcon width={20} height={20} fill="currentColor" />,
+  },
+  {
+    id: "edit",
+    label: "Edit Profile",
+    icon: <EditIcon width={20} height={20} fill="currentColor" />,
+  },
 
   // { id: "documents", label: "Documents", icon: <DocumentIcon width={20} height={20} fill="currentColor" /> },
 ];
@@ -73,8 +95,7 @@ export default function Navbar() {
                     isActive
                       ? "text-text-primary font-semibold"
                       : "text-text-primary/60 hover:text-text-primary",
-                  ].join(" ")}
-                >
+                  ].join(" ")}>
                   {label}
                   {isActive && (
                     <span className="block h-[3px] w-full bg-primary rounded" />
@@ -89,16 +110,14 @@ export default function Navbar() {
             <button
               type="button"
               className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-text-primary/70 hover:text-text-primary hover:bg-black/3 transition-colors cursor-pointer"
-              aria-label="Messages"
-            >
+              aria-label="Messages">
               <MailIcon className="h-5 w-5" />
             </button>
 
             <button
               type="button"
               className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-text-primary/70 hover:text-text-primary hover:bg-black/3 transition-colors cursor-pointer"
-              aria-label="Notifications"
-            >
+              aria-label="Notifications">
               <BellIcon className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] font-semibold leading-none text-white">
                 12
@@ -107,15 +126,13 @@ export default function Navbar() {
 
             <Link
               href="/auth/signup"
-              className="hidden sm:inline-flex text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
-            >
+              className="hidden sm:inline-flex text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors">
               Sign Up
             </Link>
 
             <Link
               href="/auth/login"
-              className="hidden sm:inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
-            >
+              className="hidden sm:inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white hover:opacity-90 transition-opacity">
               Log In
             </Link>
 
@@ -124,8 +141,7 @@ export default function Navbar() {
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
               className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-text-primary hover:bg-primary/20 transition-colors"
-              aria-label="Open menu"
-            >
+              aria-label="Open menu">
               <MenuIcon width={20} height={20} />
             </button>
           </div>
@@ -143,8 +159,7 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           <div
-            className={`fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-70 lg:hidden shadow-2xl mobile-menu-enter flex flex-col`}
-          >
+            className={`fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white z-70 lg:hidden shadow-2xl mobile-menu-enter flex flex-col`}>
             {/* Header */}
             {/* <div className="flex items-center justify-between pl-4 pr-2 py-2 border-b border-black/10 shrink-0">
               <span className="text-lg font-semibold text-text-primary">Menu</span>
@@ -178,14 +193,17 @@ export default function Navbar() {
                   )}
 
                   <div className="flex-1 pt-1">
-                    <h3 className="text-base font-bold text-text-primary">{mockProfile.name}</h3>
+                    <h3 className="text-base font-bold text-text-primary">
+                      {mockProfile.name}
+                    </h3>
 
                     {/* Rating */}
                     {mockProfile.rating && (
                       <div className="flex items-center gap-1 mt-1">
                         <StarIcon width={14} height={14} fill="#FFD700" />
                         <span className="text-xs text-text-primary">
-                          {mockProfile.rating.value} ({mockProfile.rating.count} reviews)
+                          {mockProfile.rating.value} ({mockProfile.rating.count}{" "}
+                          reviews)
                         </span>
                       </div>
                     )}
@@ -218,8 +236,7 @@ export default function Navbar() {
                     console.log("View Profile");
                     setIsMobileMenuOpen(false);
                   }}
-                  className="w-full mt-3 py-2 px-4 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/5 transition-colors"
-                >
+                  className="w-full mt-3 py-2 px-4 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/5 transition-colors">
                   View Profile
                 </button>
               </div>
@@ -242,8 +259,7 @@ export default function Navbar() {
                           isActive
                             ? "bg-primary/10 text-primary"
                             : "text-text-primary/70 hover:bg-black/5 hover:text-text-primary",
-                        ].join(" ")}
-                      >
+                        ].join(" ")}>
                         {label}
                       </Link>
                     );
@@ -261,8 +277,7 @@ export default function Navbar() {
                         console.log(item.label);
                         setIsMobileMenuOpen(false);
                       }}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-text-primary/70 hover:bg-black/5 hover:text-text-primary transition-colors text-left"
-                    >
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-text-primary/70 hover:bg-black/5 hover:text-text-primary transition-colors text-left">
                       <div className="text-text-primary/50">{item.icon}</div>
                       <span>{item.label}</span>
                     </button>
@@ -276,15 +291,13 @@ export default function Navbar() {
               <Link
                 href="/auth/signup"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-center w-full rounded-lg text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
-              >
+                className="block text-center w-full rounded-lg text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors">
                 Sign Up
               </Link>
               <Link
                 href="/auth/login"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-center py-2.5 px-4 w-full rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
+                className="block text-center py-2.5 px-4 w-full rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity">
                 Log In
               </Link>
             </div>
@@ -294,4 +307,3 @@ export default function Navbar() {
     </>
   );
 }
-

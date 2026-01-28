@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/components/shared/Container";
 import Image from "next/image";
 
 export default function AuthLayout({

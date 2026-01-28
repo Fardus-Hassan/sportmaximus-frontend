@@ -1,4 +1,4 @@
-import Container from "@/components/Container";
+import Container from "@/components/shared/Container";
 import { FacebookIcon, InstagramIcon, Logo, XIcon } from "@/components/Icons";
 
 export default function Footer() {
@@ -48,11 +48,7 @@ export default function Footer() {
               <a href="#" aria-label="Facebook">
                 <FacebookIcon width={36} height={36} />
               </a>
-              <a
-                href="#"
-                aria-label="X"
-                className="text-text-primary"
-              >
+              <a href="#" aria-label="X" className="text-text-primary">
                 <XIcon width={34} height={34} fill="currentColor" />
               </a>
               <a href="#" aria-label="Instagram">
@@ -92,4 +88,3 @@ export default function Footer() {
     </footer>
   );
 }
-
