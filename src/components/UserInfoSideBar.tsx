@@ -2,7 +2,16 @@
 
 import React from "react";
 import Image from "next/image";
-import { Logo, StarIcon, LocationIcon, CrownIcon, BookmarkIcon, EditIcon, DocumentIcon, UserIcon } from "@/components/Icons";
+import {
+  Logo,
+  StarIcon,
+  LocationIcon,
+  CrownIcon,
+  BookmarkIcon,
+  EditIcon,
+  DocumentIcon,
+  UserIcon,
+} from "@/components/Icons";
 
 export type UserRole = "user" | "beautician" | "manager";
 
@@ -59,6 +68,7 @@ export default function UserInfoSideBar({
               fill={false}
               width={800}
               height={200}
+              loading="eager"
               className="w-full h-full object-cover"
             />
           </div>
@@ -82,10 +92,14 @@ export default function UserInfoSideBar({
             )}
 
             <div className="flex-1 pt-2">
-              <h3 className="text-lg font-bold text-text-primary">{profile.name}</h3>
-              
+              <h3 className="text-lg font-bold text-text-primary">
+                {profile.name}
+              </h3>
+
               {profile.role && (
-                <p className="text-sm text-text-primary/70 mt-1">{profile.role}</p>
+                <p className="text-sm text-text-primary/70 mt-1">
+                  {profile.role}
+                </p>
               )}
 
               {/* Rating (for beauticians) */}
@@ -124,8 +138,7 @@ export default function UserInfoSideBar({
           {onViewProfile && (
             <button
               onClick={onViewProfile}
-              className="w-full mt-4 py-2.5 px-4 rounded-lg border border-primary text-text-primary font-medium hover:bg-primary/5 transition-colors"
-            >
+              className="w-full mt-4 py-2.5 px-4 rounded-lg border border-primary text-text-primary font-medium hover:bg-primary/5 transition-colors">
               View Profile
             </button>
           )}
@@ -135,11 +148,15 @@ export default function UserInfoSideBar({
       {/* Premium Trial Section (for beauticians/managers) */}
       {showPremiumTrial && (
         <div className="bg-primary rounded-lg p-6 py-3 text-center">
-          <CrownIcon width={32} height={32} fill="#FFFFFF" className="mx-auto mb-3" />
+          <CrownIcon
+            width={32}
+            height={32}
+            fill="#FFFFFF"
+            className="mx-auto mb-3"
+          />
           <button
             onClick={onPremiumTrialClick}
-            className="w-full bg-white text-text-primary font-semibold py-2.5 px-4 rounded-lg mb-3 hover:opacity-90 transition-opacity"
-          >
+            className="w-full bg-white text-text-primary font-semibold py-2.5 px-4 rounded-lg mb-3 hover:opacity-90 transition-opacity">
             3 Days of Free Trial
           </button>
           <p className="text-white text-sm">
@@ -155,10 +172,11 @@ export default function UserInfoSideBar({
             <button
               key={item.id}
               onClick={item.onClick}
-              className="w-full flex items-center gap-3 p-4 text-left hover:bg-black/3 transition-colors"
-            >
+              className="w-full flex items-center gap-3 p-4 text-left hover:bg-black/3 transition-colors">
               <div className="text-text-primary/50">{item.icon}</div>
-              <span className="text-sm font-medium text-text-primary">{item.label}</span>
+              <span className="text-sm font-medium text-text-primary">
+                {item.label}
+              </span>
             </button>
           ))}
         </div>
