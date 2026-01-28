@@ -3,15 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import {
-  Logo,
   StarIcon,
   LocationIcon,
   CrownIcon,
-  BookmarkIcon,
-  EditIcon,
-  DocumentIcon,
   UserIcon,
 } from "@/components/Icons";
+import Link from "next/link";
 
 export type UserRole = "user" | "beautician" | "manager";
 
@@ -40,17 +37,17 @@ export interface UserInfoSideBarProps {
   role: UserRole;
   profile: ProfileData;
   menuItems: MenuItem[];
-  onViewProfile?: () => void;
+  href?: string;
   showPremiumTrial?: boolean;
   onPremiumTrialClick?: () => void;
   className?: string;
 }
 
 export default function UserInfoSideBar({
+  href,
   role,
   profile,
   menuItems,
-  onViewProfile,
   showPremiumTrial = false,
   onPremiumTrialClick,
   className = "",
@@ -135,12 +132,12 @@ export default function UserInfoSideBar({
           )}
 
           {/* View Profile Button */}
-          {onViewProfile && (
-            <button
-              onClick={onViewProfile}
-              className="w-full mt-4 py-2.5 px-4 rounded-lg border border-primary text-text-primary font-medium hover:bg-primary/5 transition-colors">
+          {href && (
+            <Link
+              href={href}
+              className="w-full mt-4 py-2.5 px-4 rounded-lg border border-primary text-text-primary font-medium hover:bg-primary/5 transition-colors block text-center">
               View Profile
-            </button>
+            </Link>
           )}
         </div>
       </div>
