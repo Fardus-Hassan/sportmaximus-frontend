@@ -453,40 +453,6 @@ export default function HomeContent() {
             description:
               "Where modern beauty meets neo precision, comfort, confidence, and personalized care.",
           }}
-          menuItems={[
-            {
-              id: "transaction-history",
-              label: "Transaction History",
-              icon: (
-                <TodoCheckListIcon width={20} height={20} fill="currentColor" />
-              ),
-              onClick: () => console.log("Edit Profile clicked"),
-            },
-            {
-              id: "bookmarks",
-              label: "Bookmarks",
-              icon: (
-                <BookmarkOutlineIcon
-                  width={20}
-                  height={20}
-                  fill="currentColor"
-                />
-              ),
-              onClick: () => console.log("Edit Profile clicked"),
-            },
-            {
-              id: "edit-profile",
-              label: "Edit Profile",
-              icon: <EditIcon width={20} height={20} fill="currentColor" />,
-              onClick: () => console.log("Edit Profile clicked"),
-            },
-            {
-              id: "log-out",
-              label: "Log Out",
-              icon: <LogoutIcon width={20} height={20} fill="currentColor" />,
-              onClick: () => console.log("Log Out clicked"),
-            },
-          ]}
         />
       }
       middleColumn={

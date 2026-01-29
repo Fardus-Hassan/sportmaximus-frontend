@@ -16,7 +16,11 @@ export default function TrendingServicesCard({
   className = "",
 }: TrendingServicesProps) {
   return (
-    <div className={`bg-white rounded-lg shadow-sm p-5 ${className}`}>
+    <div
+      className={`bg-white rounded-xl p-5 ${className}`}
+      style={{
+        boxShadow: "0 1px 12px 0 rgba(0, 0, 0, 0.05)",
+      }}>
       {/* Header */}
       <div className="bg-primary/10 rounded-full px-4 py-2 mb-5 flex items-center justify-center gap-2 w-full">
         <TrendingIcon width={18} height={18} fill="#E32750" />

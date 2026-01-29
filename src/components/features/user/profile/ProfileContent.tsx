@@ -3,11 +3,6 @@
 import PageLayout from "@/components/layouts/PageLayout";
 import { AppointmentCard } from "./AppointmentCard";
 import { ProfileCard } from "./ProfileCard";
-import TrendingServices from "@/components/TrendingServicesCard";
-import TodoCheckListIcon from "@/components/Icons/TodoCheckListIcon";
-import BookmarkOutlineIcon from "@/components/Icons/BookmarkOutlineIcon";
-import { EditIcon } from "@/components/Icons";
-import LogoutIcon from "@/components/Icons/LogoutIcon";
 import {
   AppointmentCardSkeleton,
   ProfileCardSkeleton,
@@ -16,6 +11,8 @@ import {
 import Dialog from "@/components/shared/Dialogs";
 import { useState } from "react";
 import PaginationFooter from "@/components/shared/PaginationFooter";
+import TrendingServicesCard from "@/components/TrendingServicesCard";
+import AccountMenuItemsCard from "@/components/shared/AccountMenuCard";
 
 interface AppointmentCardTypes {
   id: string;
@@ -36,7 +33,7 @@ interface AppointmentCardTypes {
   onMarkComplete?: (completed: boolean) => void;
 }
 
-type DialogType = "logout" | "cancel" | "complete" | "uncomplete" | null;
+type DialogType = "cancel" | "complete" | "uncomplete" | null;
 
 export default function ProfileContent() {
   const isLoading = false;
@@ -112,10 +109,6 @@ export default function ProfileContent() {
     },
   ]);
 
-  const handleLogout = () => {
-    setDialogType("logout");
-  };
-
   const handleCancelAppointment = (appointmentId: string) => {
     setSelectedAppointmentId(appointmentId);
     setDialogType("cancel");
@@ -129,12 +122,6 @@ export default function ProfileContent() {
   const handleUnmarkComplete = (appointmentId: string) => {
     setSelectedAppointmentId(appointmentId);
     setDialogType("uncomplete");
-  };
-
-  const handleConfirmLogout = () => {
-    console.log("User logged out");
-    // Add your logout logic here
-    setDialogType(null);
   };
 
   const handleConfirmCancel = () => {
@@ -189,13 +176,6 @@ export default function ProfileContent() {
 
   const getDialogConfig = () => {
     switch (dialogType) {
-      case "logout":
-        return {
-          title: "Are you sure you want to logout?",
-          cancelText: "Cancel",
-          confirmText: "Logout",
-          onConfirm: handleConfirmLogout,
-        };
       case "cancel":
         return {
           title: "Ask to cancel this appointment?",
@@ -228,33 +208,6 @@ export default function ProfileContent() {
   };
 
   const dialogConfig = getDialogConfig();
-
-  const accountMenuItems = [
-    {
-      id: "profile",
-      label: "Transaction History",
-      icon: <TodoCheckListIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Profile clicked"),
-    },
-    {
-      id: "bookmarks",
-      label: "Bookmarks",
-      icon: <BookmarkOutlineIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Settings clicked"),
-    },
-    {
-      id: "edit-profile",
-      label: "Edit Profile",
-      icon: <EditIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Notifications clicked"),
-    },
-    {
-      id: "logout",
-      label: "Logout",
-      icon: <LogoutIcon width={20} height={20} fill="currentColor" />,
-      onClick: handleLogout,
-    },
-  ];
 
   return (
     <PageLayout
@@ -291,7 +244,7 @@ export default function ProfileContent() {
               {isLoading ? (
                 <AppointmentCardSkeleton />
               ) : (
-                <div className="">
+                <div className="space-y-8">
                   {appointments.map((item) => (
                     <AppointmentCard
                       key={item.id}
@@ -333,21 +286,7 @@ export default function ProfileContent() {
       rightColumn={
         <div className="space-y-6">
           {/* Menu Items */}
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div className="">
-              {accountMenuItems.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={item.onClick}
-                  className="w-full flex items-center gap-3 p-4 text-left hover:bg-black/3 transition-colors">
-                  <div className="text-text-primary/50">{item.icon}</div>
-                  <span className="text-sm font-medium text-text-primary">
-                    {item.label}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+          <AccountMenuItemsCard />
 
           <Dialog
             isOpen={dialogType !== null}
@@ -362,7 +301,7 @@ export default function ProfileContent() {
           {isLoading ? (
             <TrendingServicesCardSkeleton />
           ) : (
-            <TrendingServices
+            <TrendingServicesCard
               services={[
                 {
                   id: "trending-1",

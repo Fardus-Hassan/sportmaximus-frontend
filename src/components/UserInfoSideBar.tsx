@@ -9,6 +9,7 @@ import {
   UserIcon,
 } from "@/components/Icons";
 import Link from "next/link";
+import AccountMenuItemsCard from "./shared/AccountMenuCard";
 
 export type UserRole = "user" | "beautician" | "manager";
 
@@ -36,7 +37,6 @@ export interface MenuItem {
 export interface UserInfoSideBarProps {
   role: UserRole;
   profile: ProfileData;
-  menuItems: MenuItem[];
   href?: string;
   showPremiumTrial?: boolean;
   onPremiumTrialClick?: () => void;
@@ -47,7 +47,6 @@ export default function UserInfoSideBar({
   href,
   role,
   profile,
-  menuItems,
   showPremiumTrial = false,
   onPremiumTrialClick,
   className = "",
@@ -163,21 +162,7 @@ export default function UserInfoSideBar({
       )}
 
       {/* Menu Items */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-        <div className="">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={item.onClick}
-              className="w-full flex items-center gap-3 p-4 text-left hover:bg-black/3 transition-colors">
-              <div className="text-text-primary/50">{item.icon}</div>
-              <span className="text-sm font-medium text-text-primary">
-                {item.label}
-              </span>
-            </button>
-          ))}
-        </div>
-      </div>
+      <AccountMenuItemsCard />
     </div>
   );
 }
