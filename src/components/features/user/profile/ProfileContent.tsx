@@ -15,7 +15,7 @@ import {
 } from "@/components/skeletons";
 import Dialog from "@/components/shared/Dialogs";
 import { useState } from "react";
-import PaginationFooter from "@/components/shared/Pagination";
+import PaginationFooter from "@/components/shared/PaginationFooter";
 
 interface AppointmentCardTypes {
   id: string;
