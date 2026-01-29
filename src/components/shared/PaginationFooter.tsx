@@ -1,7 +1,6 @@
 "use client";
 
 import { useId, useState, useEffect } from "react";
-import React from "react";
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -189,7 +188,7 @@ const PaginationFooter = ({
                   e.preventDefault();
                   handlePageChange(1);
                 }}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-primary/10 hover:text-accent-foreground ${
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors bg-white/50 border hover:bg-primary/10 hover:text-accent-foreground ${
                   page === 1 ? "pointer-events-none opacity-50" : ""
                 }`}
                 aria-label="Go to first page">
@@ -205,7 +204,7 @@ const PaginationFooter = ({
                   e.preventDefault();
                   handlePageChange(page - 1);
                 }}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-primary/10 hover:text-accent-foreground ${
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors bg-white/50 border hover:bg-primary/10 hover:text-accent-foreground ${
                   page === 1 ? "pointer-events-none opacity-50" : ""
                 }`}
                 aria-label="Go to previous page">
@@ -228,7 +227,7 @@ const PaginationFooter = ({
                         handlePageChange(p);
                       }
                     }}
-                    className={`h-9 w-9 transition-colors ${
+                    className={`h-9 w-9 transition-colors bg-white/50 border ${
                       p === page
                         ? "bg-primary text-primary-foreground hover:bg-primary/10  font-medium"
                         : "hover:bg-primary/10 hover:text-accent-foreground"
@@ -249,7 +248,7 @@ const PaginationFooter = ({
                   e.preventDefault();
                   handlePageChange(page + 1);
                 }}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-primary/10 hover:text-accent-foreground ${
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors bg-white/50 border hover:bg-primary/10 hover:text-accent-foreground ${
                   page === totalPages ? "pointer-events-none opacity-50" : ""
                 }`}
                 aria-label="Go to next page">
@@ -265,7 +264,7 @@ const PaginationFooter = ({
                   e.preventDefault();
                   handlePageChange(totalPages);
                 }}
-                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors hover:bg-primary/10 hover:text-accent-foreground ${
+                className={`inline-flex h-9 w-9 items-center justify-center rounded-md transition-colors bg-white/50 border hover:bg-primary/10 hover:text-accent-foreground ${
                   page === totalPages ? "pointer-events-none opacity-50" : ""
                 }`}
                 aria-label="Go to last page">
