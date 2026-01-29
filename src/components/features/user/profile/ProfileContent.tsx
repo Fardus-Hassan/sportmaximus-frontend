@@ -17,6 +17,7 @@ import Dialog from "@/components/shared/Dialogs";
 import { useState } from "react";
 
 interface AppointmentCardTypes {
+  id: string;
   serviceName: string;
   clientName: string;
   clientAvatarUrl: string;
@@ -33,26 +34,18 @@ interface AppointmentCardTypes {
   onViewNotes?: () => void;
   onMarkComplete?: (completed: boolean) => void;
 }
+
+type DialogType = "logout" | "cancel" | "complete" | "uncomplete" | null;
+
 export default function ProfileContent() {
   const isLoading = false;
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const handleLogout = () => {
-    setIsDialogOpen(true);
-  };
-
-  const handleConfirmLogout = () => {
-    console.log("User logged out");
-    // Add your logout logic here
-    setIsDialogOpen(false);
-  };
-
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-  };
-
-  const appointments: AppointmentCardTypes[] = [
+  const [dialogType, setDialogType] = useState<DialogType>(null);
+  const [selectedAppointmentId, setSelectedAppointmentId] = useState<
+    string | null
+  >(null);
+  const [appointments, setAppointments] = useState<AppointmentCardTypes[]>([
     {
+      id: "appt-1",
       serviceName: "Gel Manicure",
       clientName: "Nila Akter",
       clientAvatarUrl:
@@ -65,6 +58,7 @@ export default function ProfileContent() {
       isPaid: true,
     },
     {
+      id: "appt-2",
       serviceName: "Hair Spa Treatment",
       clientName: "Farhana Islam",
       clientAvatarUrl:
@@ -77,6 +71,7 @@ export default function ProfileContent() {
       isPaid: false,
     },
     {
+      id: "appt-3",
       serviceName: "Bridal Makeup",
       clientName: "Sadia Rahman",
       clientAvatarUrl:
@@ -89,6 +84,7 @@ export default function ProfileContent() {
       isPaid: true,
     },
     {
+      id: "appt-4",
       serviceName: "Facial Cleanup",
       clientName: "Mim Chowdhury",
       clientAvatarUrl:
@@ -101,6 +97,7 @@ export default function ProfileContent() {
       isPaid: false,
     },
     {
+      id: "appt-5",
       serviceName: "Hair Coloring",
       clientName: "Anika Hasan",
       clientAvatarUrl:
@@ -112,7 +109,124 @@ export default function ProfileContent() {
       status: "Paid",
       isPaid: true,
     },
-  ];
+  ]);
+
+  const handleLogout = () => {
+    setDialogType("logout");
+  };
+
+  const handleCancelAppointment = (appointmentId: string) => {
+    setSelectedAppointmentId(appointmentId);
+    setDialogType("cancel");
+  };
+
+  const handleMarkComplete = (appointmentId: string) => {
+    setSelectedAppointmentId(appointmentId);
+    setDialogType("complete");
+  };
+
+  const handleUnmarkComplete = (appointmentId: string) => {
+    setSelectedAppointmentId(appointmentId);
+    setDialogType("uncomplete");
+  };
+
+  const handleConfirmLogout = () => {
+    console.log("User logged out");
+    // Add your logout logic here
+    setDialogType(null);
+  };
+
+  const handleConfirmCancel = () => {
+    if (selectedAppointmentId) {
+      setAppointments((prevAppointments) =>
+        prevAppointments.map((appt) =>
+          appt.id === selectedAppointmentId
+            ? { ...appt, status: "Cancelled" as const }
+            : appt,
+        ),
+      );
+      console.log(`Appointment ${selectedAppointmentId} cancelled`);
+    }
+    setDialogType(null);
+    setSelectedAppointmentId(null);
+  };
+
+  const handleConfirmComplete = () => {
+    if (selectedAppointmentId) {
+      setAppointments((prevAppointments) =>
+        prevAppointments.map((appt) =>
+          appt.id === selectedAppointmentId
+            ? { ...appt, status: "Completed" as const }
+            : appt,
+        ),
+      );
+      console.log(`Appointment ${selectedAppointmentId} marked as complete`);
+    }
+    setDialogType(null);
+    setSelectedAppointmentId(null);
+  };
+
+  const handleConfirmUncomplete = () => {
+    if (selectedAppointmentId) {
+      setAppointments((prevAppointments) =>
+        prevAppointments.map((appt) =>
+          appt.id === selectedAppointmentId
+            ? { ...appt, status: "In Progress" as const }
+            : appt,
+        ),
+      );
+      console.log(`Appointment ${selectedAppointmentId} unmarked as complete`);
+    }
+    setDialogType(null);
+    setSelectedAppointmentId(null);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogType(null);
+    setSelectedAppointmentId(null);
+  };
+
+  const getDialogConfig = () => {
+    switch (dialogType) {
+      case "logout":
+        return {
+          title: "Are you sure you want to logout?",
+          cancelText: "Cancel",
+          confirmText: "Logout",
+          onConfirm: handleConfirmLogout,
+        };
+      case "cancel":
+        return {
+          title: "Ask to cancel this appointment?",
+          cancelText: "Cancel",
+          confirmText: "Send Request",
+          onConfirm: handleConfirmCancel,
+        };
+      case "complete":
+        return {
+          title: "Mark as complete",
+          cancelText: "Cancel",
+          confirmText: "Confirm",
+          onConfirm: handleConfirmComplete,
+        };
+      case "uncomplete":
+        return {
+          title: "Unmark this appointment as completed?",
+          cancelText: "No, Keep it",
+          confirmText: "Yes, Unmark",
+          onConfirm: handleConfirmUncomplete,
+        };
+      default:
+        return {
+          title: "",
+          cancelText: "Cancel",
+          confirmText: "Confirm",
+          onConfirm: () => {},
+        };
+    }
+  };
+
+  const dialogConfig = getDialogConfig();
 
   const accountMenuItems = [
     {
@@ -176,18 +290,22 @@ export default function ProfileContent() {
               {isLoading ? (
                 <AppointmentCardSkeleton />
               ) : (
-                appointments.map((item, index) => (
+                appointments.map((item) => (
                   <AppointmentCard
-                    key={index}
+                    key={item.id}
                     {...item}
                     onReschedule={() => console.log("Reschedule clicked")}
-                    onCancel={() => console.log("Cancel clicked")}
+                    onCancel={() => handleCancelAppointment(item.id)}
                     onViewClient={() => console.log("View client clicked")}
                     onSendMessage={() => console.log("Send message clicked")}
                     onViewNotes={() => console.log("View notes clicked")}
-                    onMarkComplete={(completed) =>
-                      console.log("Mark complete:", completed)
-                    }
+                    onMarkComplete={(completed) => {
+                      if (completed) {
+                        handleMarkComplete(item.id);
+                      } else {
+                        handleUnmarkComplete(item.id);
+                      }
+                    }}
                   />
                 ))
               )}
@@ -215,13 +333,13 @@ export default function ProfileContent() {
           </div>
 
           <Dialog
-            isOpen={isDialogOpen}
+            isOpen={dialogType !== null}
             onClose={handleCloseDialog}
-            onConfirm={handleConfirmLogout}
-            cancelText="Cancel"
-            confirmText="Logout"
+            onConfirm={dialogConfig.onConfirm}
+            cancelText={dialogConfig.cancelText}
+            confirmText={dialogConfig.confirmText}
             showIcon={true}
-            title="Are you sure you want to logout?"
+            title={dialogConfig.title}
           />
 
           {isLoading ? (
