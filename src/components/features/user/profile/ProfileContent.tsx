@@ -8,6 +8,10 @@ import TodoCheckListIcon from "@/components/Icons/TodoCheckListIcon";
 import BookmarkOutlineIcon from "@/components/Icons/BookmarkOutlineIcon";
 import { EditIcon } from "@/components/Icons";
 import LogoutIcon from "@/components/Icons/LogoutIcon";
+import {
+  AppointmentCardSkeleton,
+  ProfileCardSkeleton,
+} from "./ProfileSkeleton";
 
 interface AppointmentCardTypes {
   serviceName: string;
@@ -27,6 +31,8 @@ interface AppointmentCardTypes {
   onMarkComplete?: (completed: boolean) => void;
 }
 export default function ProfileContent() {
+  const isLoading = false;
+
   const appointments: AppointmentCardTypes[] = [
     {
       serviceName: "Gel Manicure",
@@ -124,18 +130,24 @@ export default function ProfileContent() {
       leftColumn={
         <div className="space-y-8">
           {/* Profile Card */}
-          <ProfileCard
-            name="Sara Chen"
-            tagline="Where modern beauty meets neoprecision, comfort, confidence, and personalized care."
-            avatarUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
-            backgroundUrl="https://images.unsplash.com/photo-1502685104226-ee32379fefbe"
-            joinedDate="21 Aug, 2025"
-            location="Dhaka, Bangladesh"
-            totalServices={225}
-            onEditProfile={() => console.log("Edit profile clicked")}
-            onChangeAvatar={() => console.log("Change avatar clicked")}
-            onChangeBackground={() => console.log("Change background clicked")}
-          />
+          {isLoading ? (
+            <ProfileCardSkeleton />
+          ) : (
+            <ProfileCard
+              name="Sara Chen"
+              tagline="Where modern beauty meets neoprecision, comfort, confidence, and personalized care."
+              avatarUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
+              backgroundUrl="https://images.unsplash.com/photo-1502685104226-ee32379fefbe"
+              joinedDate="21 Aug, 2025"
+              location="Dhaka, Bangladesh"
+              totalServices={225}
+              onEditProfile={() => console.log("Edit profile clicked")}
+              onChangeAvatar={() => console.log("Change avatar clicked")}
+              onChangeBackground={() =>
+                console.log("Change background clicked")
+              }
+            />
+          )}
 
           {/* Appointment Card Example */}
           <section>
@@ -143,20 +155,24 @@ export default function ProfileContent() {
               Appointments
             </h2>
             <div className="space-y-8">
-              {appointments.map((item, index) => (
-                <AppointmentCard
-                  key={index}
-                  {...item}
-                  onReschedule={() => console.log("Reschedule clicked")}
-                  onCancel={() => console.log("Cancel clicked")}
-                  onViewClient={() => console.log("View client clicked")}
-                  onSendMessage={() => console.log("Send message clicked")}
-                  onViewNotes={() => console.log("View notes clicked")}
-                  onMarkComplete={(completed) =>
-                    console.log("Mark complete:", completed)
-                  }
-                />
-              ))}
+              {isLoading ? (
+                <AppointmentCardSkeleton />
+              ) : (
+                appointments.map((item, index) => (
+                  <AppointmentCard
+                    key={index}
+                    {...item}
+                    onReschedule={() => console.log("Reschedule clicked")}
+                    onCancel={() => console.log("Cancel clicked")}
+                    onViewClient={() => console.log("View client clicked")}
+                    onSendMessage={() => console.log("Send message clicked")}
+                    onViewNotes={() => console.log("View notes clicked")}
+                    onMarkComplete={(completed) =>
+                      console.log("Mark complete:", completed)
+                    }
+                  />
+                ))
+              )}
             </div>
           </section>
         </div>
