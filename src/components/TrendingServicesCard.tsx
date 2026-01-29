@@ -11,7 +11,7 @@ export interface TrendingServicesProps {
   className?: string;
 }
 
-export default function TrendingServices({
+export default function TrendingServicesCard({
   services,
   className = "",
 }: TrendingServicesProps) {
@@ -20,7 +20,9 @@ export default function TrendingServices({
       {/* Header */}
       <div className="bg-primary/10 rounded-full px-4 py-2 mb-5 flex items-center justify-center gap-2 w-full">
         <TrendingIcon width={18} height={18} fill="#E32750" />
-        <h3 className="text-sm font-bold text-center text-primary">Trending This Week</h3>
+        <h3 className="text-sm font-bold text-center text-primary">
+          Trending This Week
+        </h3>
       </div>
 
       {/* Services List */}
@@ -34,7 +36,9 @@ export default function TrendingServices({
             <h4 className="text-sm font-bold text-text-primary">
               {service.serviceName}
             </h4>
-            <p className="text-xs text-text-primary/60">{service.providerName}</p>
+            <p className="text-xs text-text-primary/60">
+              {service.providerName}
+            </p>
           </div>
         ))}
       </div>

@@ -3,7 +3,7 @@
 import PageLayout from "@/components/layouts/PageLayout";
 import { AppointmentCard } from "./AppointmentCard";
 import { ProfileCard } from "./ProfileCard";
-import TrendingServices from "@/components/TrendingServices";
+import TrendingServices from "@/components/TrendingServicesCard";
 import TodoCheckListIcon from "@/components/Icons/TodoCheckListIcon";
 import BookmarkOutlineIcon from "@/components/Icons/BookmarkOutlineIcon";
 import { EditIcon } from "@/components/Icons";
@@ -11,7 +11,8 @@ import LogoutIcon from "@/components/Icons/LogoutIcon";
 import {
   AppointmentCardSkeleton,
   ProfileCardSkeleton,
-} from "./ProfileSkeleton";
+  TrendingServicesCardSkeleton,
+} from "@/components/skeletons";
 
 interface AppointmentCardTypes {
   serviceName: string;
@@ -196,35 +197,39 @@ export default function ProfileContent() {
             </div>
           </div>
 
-          <TrendingServices
-            services={[
-              {
-                id: "trending-1",
-                serviceName: "Natural Makeup Service",
-                providerName: "Velora Beauty Lounge",
-              },
-              {
-                id: "trending-2",
-                serviceName: "Ombre Gel Nails",
-                providerName: "Velora Beauty Lounge",
-              },
-              {
-                id: "trending-3",
-                serviceName: "Bridal Makeup",
-                providerName: "Velora Beauty Lounge",
-              },
-              {
-                id: "trending-4",
-                serviceName: "Spa Pedicure",
-                providerName: "Velora Beauty Lounge",
-              },
-              {
-                id: "trending-5",
-                serviceName: "Acrylic Nails",
-                providerName: "Velora Beauty Lounge",
-              },
-            ]}
-          />
+          {isLoading ? (
+            <TrendingServicesCardSkeleton />
+          ) : (
+            <TrendingServices
+              services={[
+                {
+                  id: "trending-1",
+                  serviceName: "Natural Makeup Service",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-2",
+                  serviceName: "Ombre Gel Nails",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-3",
+                  serviceName: "Bridal Makeup",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-4",
+                  serviceName: "Spa Pedicure",
+                  providerName: "Velora Beauty Lounge",
+                },
+                {
+                  id: "trending-5",
+                  serviceName: "Acrylic Nails",
+                  providerName: "Velora Beauty Lounge",
+                },
+              ]}
+            />
+          )}
         </div>
       }
     />

@@ -4,7 +4,7 @@ import PageLayout from "@/components/layouts/PageLayout";
 import SearchBar from "@/components/SearchBar";
 import UserInfoSideBar from "@/components/UserInfoSideBar";
 import ServiceCard from "@/components/ServiceCard";
-import TrendingServices from "@/components/TrendingServices";
+import TrendingServices from "@/components/TrendingServicesCard";
 import { EditIcon } from "@/components/Icons";
 import TodoCheckListIcon from "@/components/Icons/TodoCheckListIcon";
 import BookmarkOutlineIcon from "@/components/Icons/BookmarkOutlineIcon";
