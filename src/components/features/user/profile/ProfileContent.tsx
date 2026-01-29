@@ -15,6 +15,7 @@ import {
 } from "@/components/skeletons";
 import Dialog from "@/components/shared/Dialogs";
 import { useState } from "react";
+import PaginationFooter from "@/components/shared/Pagination";
 
 interface AppointmentCardTypes {
   id: string;
@@ -290,24 +291,40 @@ export default function ProfileContent() {
               {isLoading ? (
                 <AppointmentCardSkeleton />
               ) : (
-                appointments.map((item) => (
-                  <AppointmentCard
-                    key={item.id}
-                    {...item}
-                    onReschedule={() => console.log("Reschedule clicked")}
-                    onCancel={() => handleCancelAppointment(item.id)}
-                    onViewClient={() => console.log("View client clicked")}
-                    onSendMessage={() => console.log("Send message clicked")}
-                    onViewNotes={() => console.log("View notes clicked")}
-                    onMarkComplete={(completed) => {
-                      if (completed) {
-                        handleMarkComplete(item.id);
-                      } else {
-                        handleUnmarkComplete(item.id);
-                      }
-                    }}
+                <div className="">
+                  {appointments.map((item) => (
+                    <AppointmentCard
+                      key={item.id}
+                      {...item}
+                      onReschedule={() => console.log("Reschedule clicked")}
+                      onCancel={() => handleCancelAppointment(item.id)}
+                      onViewClient={() => console.log("View client clicked")}
+                      onSendMessage={() => console.log("Send message clicked")}
+                      onViewNotes={() => console.log("View notes clicked")}
+                      onMarkComplete={(completed) => {
+                        if (completed) {
+                          handleMarkComplete(item.id);
+                        } else {
+                          handleUnmarkComplete(item.id);
+                        }
+                      }}
+                    />
+                  ))}
+
+                  <PaginationFooter
+                    currentPage={1}
+                    totalPages={16}
+                    totalItems={1450}
+                    itemsPerPageOptions={["10", "11", "25", "50"]}
+                    defaultItemsPerPage="11"
+                    onPageChange={(page) =>
+                      console.log("Page changed to:", page)
+                    }
+                    onItemsPerPageChange={(items) =>
+                      console.log("Items per page changed to:", items)
+                    }
                   />
-                ))
+                </div>
               )}
             </div>
           </section>
