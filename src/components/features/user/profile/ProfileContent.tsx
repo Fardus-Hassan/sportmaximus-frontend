@@ -13,6 +13,8 @@ import {
   ProfileCardSkeleton,
   TrendingServicesCardSkeleton,
 } from "@/components/skeletons";
+import Dialog from "@/components/shared/Dialogs";
+import { useState } from "react";
 
 interface AppointmentCardTypes {
   serviceName: string;
@@ -33,6 +35,21 @@ interface AppointmentCardTypes {
 }
 export default function ProfileContent() {
   const isLoading = false;
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleLogout = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleConfirmLogout = () => {
+    console.log("User logged out");
+    // Add your logout logic here
+    setIsDialogOpen(false);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
 
   const appointments: AppointmentCardTypes[] = [
     {
@@ -120,7 +137,7 @@ export default function ProfileContent() {
       id: "logout",
       label: "Logout",
       icon: <LogoutIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Logout clicked"),
+      onClick: handleLogout,
     },
   ];
 
@@ -196,6 +213,16 @@ export default function ProfileContent() {
               ))}
             </div>
           </div>
+
+          <Dialog
+            isOpen={isDialogOpen}
+            onClose={handleCloseDialog}
+            onConfirm={handleConfirmLogout}
+            cancelText="Cancel"
+            confirmText="Logout"
+            showIcon={true}
+            title="Are you sure you want to logout?"
+          />
 
           {isLoading ? (
             <TrendingServicesCardSkeleton />

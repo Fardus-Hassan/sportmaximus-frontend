@@ -225,7 +225,7 @@ export const AppointmentCard: React.FC<AppointmentCardProps> = ({
           {/* Reschedule Button */}
           <button
             onClick={onReschedule}
-            className="bg-[#E91E63] hover:bg-[#D81B60] text-white font-medium py-2 sm:py-3 px-4 sm:px-8 rounded-lg sm:rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-sm w-full">
+            className="bg-primary hover:bg-[#ce2348] text-white font-medium py-2 sm:py-3 px-4 sm:px-8 rounded-lg sm:rounded-xl transition-colors duration-200 flex items-center justify-center gap-2 text-sm w-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"

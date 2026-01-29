@@ -55,6 +55,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
             width="37"
             height="30"
             viewBox="0 0 37 30"
+            className="w-5 h-5 sm:w-7.5 sm:h-7.5"
             fill="none">
             <path
               d="M23.921 17.168C23.921 20.385 21.304 23.002 18.087 23.002C14.87 23.002 12.254 20.385 12.254 17.168C12.254 13.951 14.87 11.334 18.087 11.334C21.304 11.334 23.921 13.952 23.921 17.168ZM36.174 8.884V25.454C36.174 27.663 34.383 29.454 32.174 29.454H4C1.791 29.454 0 27.663 0 25.454V8.884C0 6.675 1.791 4.884 4 4.884H8.92V3.5C8.92 1.567 10.486 0 12.42 0H23.754C25.688 0 27.254 1.567 27.254 3.5V4.883H32.174C34.383 4.884 36.174 6.675 36.174 8.884ZM26.921 17.168C26.921 12.297 22.958 8.334 18.087 8.334C13.217 8.334 9.254 12.297 9.254 17.168C9.254 22.039 13.217 26.002 18.087 26.002C22.958 26.002 26.921 22.039 26.921 17.168Z"
@@ -86,13 +87,14 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
               <button
                 type="button"
                 onClick={onChangeAvatar}
-                className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-white hover:bg-gray-100 p-2 rounded-md shadow-md transition-colors duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                className="absolute bottom-2 right-2 sm:bottom-4.5 sm:right-4.5 bg-white hover:bg-gray-100 p-1.5 sm:p-2 rounded-md shadow-md transition-colors duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                 aria-label="Change avatar">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
                   height="30"
                   viewBox="0 0 37 30"
+                  className="w-4.5 h-4.5 sm:w-7.5 sm:h-7.5"
                   fill="none">
                   <path
                     d="M23.921 17.168C23.921 20.385 21.304 23.002 18.087 23.002C14.87 23.002 12.254 20.385 12.254 17.168C12.254 13.951 14.87 11.334 18.087 11.334C21.304 11.334 23.921 13.952 23.921 17.168ZM36.174 8.884V25.454C36.174 27.663 34.383 29.454 32.174 29.454H4C1.791 29.454 0 27.663 0 25.454V8.884C0 6.675 1.791 4.884 4 4.884H8.92V3.5C8.92 1.567 10.486 0 12.42 0H23.754C25.688 0 27.254 1.567 27.254 3.5V4.883H32.174C34.383 4.884 36.174 6.675 36.174 8.884ZM26.921 17.168C26.921 12.297 22.958 8.334 18.087 8.334C13.217 8.334 9.254 12.297 9.254 17.168C9.254 22.039 13.217 26.002 18.087 26.002C22.958 26.002 26.921 22.039 26.921 17.168Z"
