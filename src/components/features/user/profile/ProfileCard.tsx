@@ -37,7 +37,6 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
       {/* Background Image Section */}
       <div className="relative w-full h-48 sm:h-56 md:h-64 lg:h-72 bg-gray-200">
         <Image
-          unoptimized
           src={backgroundUrl || "/placeholder.svg"}
           alt="Profile background"
           className="w-full h-full object-cover"
@@ -49,14 +48,18 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
         <button
           type="button"
           onClick={onChangeBackground}
-          className="absolute bottom-4 right-4 bg-pink-200 hover:bg-pink-300 p-2 rounded-lg shadow-md transition-colors duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+          className="absolute bottom-4 right-4 bg-white hover:bg-gray-100 p-2 rounded-lg shadow-md transition-colors duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
           aria-label="Change background image">
           <svg
-            className="w-5 h-5 text-pink-600"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+            xmlns="http://www.w3.org/2000/svg"
+            width="37"
+            height="30"
+            viewBox="0 0 37 30"
+            fill="none">
+            <path
+              d="M23.921 17.168C23.921 20.385 21.304 23.002 18.087 23.002C14.87 23.002 12.254 20.385 12.254 17.168C12.254 13.951 14.87 11.334 18.087 11.334C21.304 11.334 23.921 13.952 23.921 17.168ZM36.174 8.884V25.454C36.174 27.663 34.383 29.454 32.174 29.454H4C1.791 29.454 0 27.663 0 25.454V8.884C0 6.675 1.791 4.884 4 4.884H8.92V3.5C8.92 1.567 10.486 0 12.42 0H23.754C25.688 0 27.254 1.567 27.254 3.5V4.883H32.174C34.383 4.884 36.174 6.675 36.174 8.884ZM26.921 17.168C26.921 12.297 22.958 8.334 18.087 8.334C13.217 8.334 9.254 12.297 9.254 17.168C9.254 22.039 13.217 26.002 18.087 26.002C22.958 26.002 26.921 22.039 26.921 17.168Z"
+              fill="#FFB2C3"
+            />
           </svg>
         </button>
       </div>
@@ -68,9 +71,8 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           {/* Avatar Container */}
           <div className="relative -mt-20 sm:-mt-24 md:-mt-28 lg:-mt-32 shrink-0 mx-auto sm:mx-0">
             <div className="relative">
-              <div className="w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-60 lg:h-60 rounded-full border-4 sm:border-5 md:border-6 border-white bg-linear-to-br from-orange-100 to-orange-50 overflow-hidden shadow-lg">
+              <div className="w-32 h-32 sm:w-44 sm:h-44 md:w-52 md:h-52 lg:w-60 lg:h-60 rounded-full border-4 sm:border-5 md:border-6 border-white bg-linear-to-br from-orange-100 to-orange-50 overflow-hidden ">
                 <Image
-                  unoptimized
                   src={avatarUrl || "/placeholder.svg"}
                   alt={name}
                   className="w-full h-full object-cover"
@@ -84,14 +86,18 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
               <button
                 type="button"
                 onClick={onChangeAvatar}
-                className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-pink-300 hover:bg-pink-400 p-2 sm:p-2.5 rounded-md shadow-md transition-colors duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
+                className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-white hover:bg-gray-100 p-2 rounded-md shadow-md transition-colors duration-200 flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
                 aria-label="Change avatar">
                 <svg
-                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  viewBox="0 0 37 30"
+                  fill="none">
+                  <path
+                    d="M23.921 17.168C23.921 20.385 21.304 23.002 18.087 23.002C14.87 23.002 12.254 20.385 12.254 17.168C12.254 13.951 14.87 11.334 18.087 11.334C21.304 11.334 23.921 13.952 23.921 17.168ZM36.174 8.884V25.454C36.174 27.663 34.383 29.454 32.174 29.454H4C1.791 29.454 0 27.663 0 25.454V8.884C0 6.675 1.791 4.884 4 4.884H8.92V3.5C8.92 1.567 10.486 0 12.42 0H23.754C25.688 0 27.254 1.567 27.254 3.5V4.883H32.174C34.383 4.884 36.174 6.675 36.174 8.884ZM26.921 17.168C26.921 12.297 22.958 8.334 18.087 8.334C13.217 8.334 9.254 12.297 9.254 17.168C9.254 22.039 13.217 26.002 18.087 26.002C22.958 26.002 26.921 22.039 26.921 17.168Z"
+                    fill="#FFB2C3"
+                  />
                 </svg>
               </button>
             </div>

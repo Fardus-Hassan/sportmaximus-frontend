@@ -31,7 +31,8 @@ export default function ProfileContent() {
     {
       serviceName: "Gel Manicure",
       clientName: "Nila Akter",
-      clientAvatarUrl: "",
+      clientAvatarUrl:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
       venueName: "Velora Beauty Lounge",
       date: "2025-11-20",
       time: "2:00 PM",
@@ -42,7 +43,8 @@ export default function ProfileContent() {
     {
       serviceName: "Hair Spa Treatment",
       clientName: "Farhana Islam",
-      clientAvatarUrl: "",
+      clientAvatarUrl:
+        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
       venueName: "Glow Beauty Studio",
       date: "2025-11-21",
       time: "11:30 AM",
@@ -53,7 +55,8 @@ export default function ProfileContent() {
     {
       serviceName: "Bridal Makeup",
       clientName: "Sadia Rahman",
-      clientAvatarUrl: "",
+      clientAvatarUrl:
+        "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=200&q=80",
       venueName: "Elegance Salon",
       date: "2025-11-22",
       time: "5:00 PM",
@@ -64,7 +67,8 @@ export default function ProfileContent() {
     {
       serviceName: "Facial Cleanup",
       clientName: "Mim Chowdhury",
-      clientAvatarUrl: "",
+      clientAvatarUrl:
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
       venueName: "Velora Beauty Lounge",
       date: "2025-11-23",
       time: "1:00 PM",
@@ -75,7 +79,8 @@ export default function ProfileContent() {
     {
       serviceName: "Hair Coloring",
       clientName: "Anika Hasan",
-      clientAvatarUrl: "",
+      clientAvatarUrl:
+        "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=200&q=80",
       venueName: "Urban Chic Salon",
       date: "2025-11-24",
       time: "4:30 PM",
@@ -122,8 +127,8 @@ export default function ProfileContent() {
           <ProfileCard
             name="Sara Chen"
             tagline="Where modern beauty meets neoprecision, comfort, confidence, and personalized care."
-            avatarUrl="https://via.placeholder.com/200"
-            backgroundUrl="https://via.placeholder.com/1200x400"
+            avatarUrl="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80"
+            backgroundUrl="https://images.unsplash.com/photo-1502685104226-ee32379fefbe"
             joinedDate="21 Aug, 2025"
             location="Dhaka, Bangladesh"
             totalServices={225}
