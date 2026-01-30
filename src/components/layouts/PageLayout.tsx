@@ -31,7 +31,7 @@ export default function PageLayout({
   if (layout === "three-column") {
     return (
       <div
-        className={`flex flex-col md:flex-row gap-6 min-h-screen ${className}`}>
+        className={`flex flex-col md:flex-row gap-6 min-h-screen mt-12 ${className}`}>
         {/* Left Column - Hidden on small, visible on medium+ */}
         {leftColumn && (
           <aside
