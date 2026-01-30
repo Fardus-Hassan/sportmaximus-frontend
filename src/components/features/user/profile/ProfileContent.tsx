@@ -13,6 +13,13 @@ import { useState } from "react";
 import PaginationFooter from "@/components/shared/PaginationFooter";
 import TrendingServicesCard from "@/components/TrendingServicesCard";
 import AccountMenuItemsCard from "@/components/shared/AccountMenuCard";
+import {
+  Dialog as ShadcnDialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import RateUsDialog from "./RateUsDialog";
 
 interface AppointmentCardTypes {
   id: string;
@@ -109,6 +116,9 @@ export default function ProfileContent() {
     },
   ]);
 
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openRateDialog, setOpenRateDialog] = useState(false);
+
   const handleCancelAppointment = (appointmentId: string) => {
     setSelectedAppointmentId(appointmentId);
     setDialogType("cancel");
@@ -149,6 +159,9 @@ export default function ProfileContent() {
         ),
       );
       console.log(`Appointment ${selectedAppointmentId} marked as complete`);
+
+      // Show rate dialog after marking as complete
+      setOpenRateDialog(true);
     }
     setDialogType(null);
     setSelectedAppointmentId(null);
@@ -172,6 +185,17 @@ export default function ProfileContent() {
   const handleCloseDialog = () => {
     setDialogType(null);
     setSelectedAppointmentId(null);
+  };
+
+  const handleRateSubmit = (rating: number, comment: string) => {
+    // Handle rating submission - send to API, update state, etc.
+    console.log("Rating submitted:", { rating, comment });
+
+    // You can add API call here
+    // await submitRating({ appointmentId: selectedAppointmentId, rating, comment });
+
+    // Show success message (toast/notification)
+    // toast.success("Thank you for your feedback!");
   };
 
   const getDialogConfig = () => {
@@ -253,7 +277,7 @@ export default function ProfileContent() {
                       onCancel={() => handleCancelAppointment(item.id)}
                       onViewClient={() => console.log("View client clicked")}
                       onSendMessage={() => console.log("Send message clicked")}
-                      onViewNotes={() => console.log("View notes clicked")}
+                      onViewNotes={() => setOpenDialog(true)}
                       onMarkComplete={(completed) => {
                         if (completed) {
                           handleMarkComplete(item.id);
@@ -276,6 +300,111 @@ export default function ProfileContent() {
                     onItemsPerPageChange={(items) =>
                       console.log("Items per page changed to:", items)
                     }
+                  />
+
+                  {/* Booking Receipt Dialog */}
+                  <ShadcnDialog
+                    open={openDialog}
+                    onOpenChange={(e) => setOpenDialog(e)}>
+                    <DialogContent className="sm:max-w-[425px] p-0 gap-0">
+                      <div className="p-6 pb-8">
+                        <DialogHeader className="mb-6">
+                          <DialogTitle className="text-2xl font-semibold text-gray-800">
+                            Booking Receipt
+                          </DialogTitle>
+                        </DialogHeader>
+
+                        <div className="space-y-4">
+                          {/* Client Name */}
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm text-gray-600">
+                              Client name
+                            </span>
+                            <span className="text-sm font-semibold text-gray-800">
+                              Sara Chen
+                            </span>
+                          </div>
+
+                          {/* Parlor Name */}
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm text-gray-600">
+                              Parlor Name
+                            </span>
+                            <span className="text-sm font-semibold text-gray-800">
+                              Velora Beauty Parlor
+                            </span>
+                          </div>
+
+                          {/* Date */}
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm text-gray-600">Date</span>
+                            <span className="text-sm font-semibold text-gray-800">
+                              Mon, 12 Jan 2026
+                            </span>
+                          </div>
+
+                          {/* Time */}
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm text-gray-600">Time</span>
+                            <span className="text-sm font-semibold text-gray-800">
+                              12:28 PM
+                            </span>
+                          </div>
+
+                          {/* Service */}
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm text-gray-600">
+                              Service
+                            </span>
+                            <span className="text-sm font-semibold text-gray-800 text-right">
+                              Nail Art , Bridal & Acrylic
+                            </span>
+                          </div>
+
+                          {/* Price */}
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm text-gray-600">Price</span>
+                            <span className="text-sm font-semibold text-gray-800">
+                              $1000
+                            </span>
+                          </div>
+
+                          {/* Tax */}
+                          <div className="flex justify-between items-start">
+                            <span className="text-sm text-gray-600">
+                              Tax(15%)
+                            </span>
+                            <span className="text-sm font-semibold text-gray-800">
+                              $150
+                            </span>
+                          </div>
+
+                          {/* Total Price */}
+                          <div className="flex justify-between items-start py-2">
+                            <span className="text-sm font-semibold text-gray-800">
+                              Total Price
+                            </span>
+                            <span className="text-sm font-semibold text-gray-800">
+                              $1150
+                            </span>
+                          </div>
+
+                          {/* Button */}
+                          <button
+                            onClick={() => setOpenDialog(false)}
+                            className="w-full bg-primary hover:bg-[#ce2348] text-white font-medium py-2.5 rounded-lg transition-colors">
+                            Go To Home
+                          </button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </ShadcnDialog>
+
+                  {/* Rate Us Dialog */}
+                  <RateUsDialog
+                    open={openRateDialog}
+                    onOpenChange={setOpenRateDialog}
+                    onSubmit={handleRateSubmit}
                   />
                 </div>
               )}
