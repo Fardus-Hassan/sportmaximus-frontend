@@ -453,7 +453,7 @@ export default function HomeContent() {
       }
       middleColumn={
         <div className="rounded-lg">
-          <div className="mb-6 p-5 shadow-lg rounded-lg bg-white mt-12">
+          <div className="mb-6 p-5 shadow-lg rounded-lg bg-white">
             <SearchBar onSearch={(value) => console.log("Search:", value)} />
           </div>
           <div className="space-y-6">
