@@ -2,9 +2,56 @@
 import React from "react";
 import Image from "next/image";
 
-const HeroSection: React.FC = () => {
+const OnBoardingPages: React.FC = () => {
+  const INVERTED_CORNERS_CLIP = "inverted-corners-clip";
+
   return (
     <div className="bg-white p-2 h-screen overflow-hidden">
+      <svg width={0} height={0} className="absolute" aria-hidden>
+        <defs>
+          <clipPath
+            id={INVERTED_CORNERS_CLIP}
+            clipPathUnits="objectBoundingBox">
+            <path
+              d="M 0.12,0 L 1,0 L 1,0.88 A 0.12,0.12 0 0 1 0.88,1 L 0,1 L 0,0.12 A 0.12,0.12 0 0 1 0.12,0 Z"
+              fill="black"
+            />
+          </clipPath>
+          {/* polygon(100% 8%, 100% 100%, 40% 100%, 40% 90%, 0% 90%, 0% 0%, 90% 0%, 90% 8%) with rounded corners */}
+          <clipPath id="hero-polygon-rounded" clipPathUnits="objectBoundingBox">
+            <path
+              d="
+                    M 0.9 0.08
+
+                    L 0.96 0.08
+                    Q 1 0.08 1 0.12
+
+                    L 1 0.96
+                    Q 1 1 0.96 1
+
+                    L 0.44 1
+                    Q 0.4 1 0.4 0.96
+
+                    L 0.4 0.92
+                    Q 0.4 0.9 0.36 0.9
+
+                    L 0.06 0.9
+                    Q 0 0.9 0 0.84
+
+                    L 0 0.06
+                    Q 0 0 0.06 0
+
+                    L 0.84 0
+                    Q 0.9 0 0.9 0.06
+
+                    Q 0.9 0.08 0.92 0.08
+                    Z
+                    "
+              fill="black"
+            />
+          </clipPath>
+        </defs>
+      </svg>
       <div
         className="relative w-full h-full bg-cover bg-center bg-no-repeat overflow-hidden rounded-2xl"
         style={{
@@ -102,57 +149,34 @@ const HeroSection: React.FC = () => {
             </div>
 
             {/* Right Column - Image Content */}
-            <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl group/image">
-              {/* Image with overlay gradient and custom clip-path */}
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent z-10"></div>
-
-              <Image
-                src="/images/top.jpg"
-                alt="Hero illustration"
-                fill
-                className="object-cover object-center transition-transform duration-700 group-hover/image:scale-110"
-                style={{
-                  clipPath: "polygon(0 8%, 8% 0, 100% 0, 100% 100%, 0 100%)",
-                }}
-                priority
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-
-              {/* Floating badge */}
-              <div className="absolute top-6 right-6 z-20 bg-white/10 backdrop-blur-xl rounded-full px-4 py-2 border border-white/20 shadow-lg">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-white text-sm font-medium">
-                    Live Now
-                  </span>
-                </div>
+            <div className="relative w-full h-full rounded-2xl overflow-hidden ">
+              <div
+                className="absolute inset-0 md:inset-y-0 md:left-0 md:right-0 overflow-hidden rounded-b-3xl md:rounded-none group/image"
+                style={{ clipPath: "url(#hero-polygon-rounded)" }}>
+                <Image
+                  src="/images/top.jpg"
+                  alt="Hero illustration"
+                  fill
+                  className="object-cover object-center transition-transform "
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
 
-              {/* Glassmorphism Overlay with Enhanced Text */}
-              <div className="absolute inset-0 flex items-end justify-center z-20 p-6 md:p-8">
-                <div className="bg-white/10 backdrop-blur-2xl rounded-2xl shadow-2xl p-6 md:p-8 lg:p-10 border border-white/20 max-w-md w-full transform transition-all duration-500 hover:scale-105 hover:bg-white/15">
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-1 h-8 bg-linear-to-b from-blue-400 to-purple-600 rounded-full"></div>
-                    <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white">
-                      Innovation Meets Design
-                    </h3>
-                  </div>
+              <div className="absolute right-4 top-0">
+                <button className="bg-red-300 h-14 w-14 rounded-full">
+                  Skip
+                </button>
+              </div>
 
-                  <p className="text-sm md:text-base text-gray-100 leading-relaxed mb-4">
-                    Experience the future of technology with our cutting-edge
-                    solutions that blend creativity with functionality.
-                  </p>
-
-                  {/* Progress indicator */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-xs text-gray-200 mb-1">
-                      <span>Performance</span>
-                      <span>95%</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-white/20 rounded-full overflow-hidden">
-                      <div className="h-full w-[95%] bg-linear-to-r from-blue-400 to-purple-600 rounded-full animate-pulse"></div>
-                    </div>
-                  </div>
+              <div className="absolute bottom-4 left-4">
+                <div className="flex items-center gap-4">
+                  <button className="bg-red-300 w-full py-3 px-9 rounded-xl">
+                    Prev
+                  </button>
+                  <button className="bg-red-300 w-full py-3 px-9 rounded-xl">
+                    Next
+                  </button>
                 </div>
               </div>
             </div>
@@ -195,4 +219,4 @@ const HeroSection: React.FC = () => {
   );
 };
 
-export default HeroSection;
+export default OnBoardingPages;
