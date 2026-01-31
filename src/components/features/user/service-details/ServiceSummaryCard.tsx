@@ -37,7 +37,11 @@ export const ServiceSummaryCard: React.FC<ServiceSummaryCardProps> = ({
   onBookmark,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 max-w-lg w-full">
+    <div
+      className="bg-white rounded-2xl p-6 w-full border border-[#D1D1D1]"
+      style={{
+        boxShadow: "0 1px 12px 0 rgba(0, 0, 0, 0.05",
+      }}>
       {/* Header Section */}
       <div className="flex items-start justify-between mb-4">
         <h1 className="text-2xl font-bold text-gray-900">{serviceName}</h1>

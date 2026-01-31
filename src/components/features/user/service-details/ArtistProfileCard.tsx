@@ -24,7 +24,11 @@ export const ArtistProfileCard: React.FC<ArtistProfileCardProps> = ({
   onContact,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden max-w-sm w-full">
+    <div
+      className="bg-white rounded-2xl overflow-hidden w-full"
+      style={{
+        boxShadow: "0 1px 12px 0 rgba(0, 0, 0, 0.05",
+      }}>
       {/* Cover Image with Logo Overlay */}
       <div className="relative h-40">
         <Image

@@ -22,7 +22,11 @@ export const ReviewCard: React.FC<ReviewCardProps> = ({
   showDeleteButton = true,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 w-full">
+    <div
+      className="bg-white rounded-2xl p-6 w-full"
+      style={{
+        boxShadow: "0 1px 12px 0 rgba(0, 0, 0, 0.05",
+      }}>
       {/* Header Section */}
       <div className="flex items-start justify-between mb-4">
         {/* User Info */}

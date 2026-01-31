@@ -29,7 +29,11 @@ export const SenderReviewCard: React.FC<SenderReviewCardProps> = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-6 w-full">
+    <div
+      className="bg-white rounded-2xl p-4 sm:p-6 w-full"
+      style={{
+        boxShadow: "0 1px 12px 0 rgba(0, 0, 0, 0.05",
+      }}>
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 sm:gap-0 mb-6">
         {/* User Info */}

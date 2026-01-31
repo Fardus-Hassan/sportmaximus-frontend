@@ -5,6 +5,7 @@ import { ServiceSummaryCard } from "./ServiceSummaryCard";
 import { DescriptionCard } from "./DescriptionCard";
 import { ArtistProfileCard } from "./ArtistProfileCard";
 import ProductReview from "./ProductReview";
+import { ServiceCard } from "../services/ServiceCard";
 
 export default function ServiceDetailsContent() {
   const makeupServices = [
@@ -22,6 +23,63 @@ export default function ServiceDetailsContent() {
       title: "Traditional Makeup",
       description:
         "Classic makeup styles with rich colors, perfect for cultural and traditional occasions.",
+    },
+  ];
+
+  const services = [
+    {
+      image:
+        "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&auto=format&fit=crop",
+      title: "Gel Manicure",
+      price: 30,
+      location: "Velora Beauty Lounge",
+      description:
+        "A long-lasting, glossy manicure that keeps your nails flawless for weeks.",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=800&auto=format&fit=crop",
+      title: "Classic Pedicure",
+      price: 40,
+      location: "Velora Beauty Lounge",
+      description:
+        "Relaxing pedicure treatment to soften feet, shape nails, and enhance comfort.",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=800&auto=format&fit=crop",
+      title: "Facial Glow Therapy",
+      price: 55,
+      location: "Velora Beauty Lounge",
+      description:
+        "Deep cleansing facial that rejuvenates skin and restores natural radiance.",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1620331311520-246422fd82f9?w=800&auto=format&fit=crop",
+      title: "Acrylic Nail Extension",
+      price: 65,
+      location: "Velora Beauty Lounge",
+      description:
+        "Durable acrylic extensions styled to perfection for a bold, elegant look.",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1556228724-4d2cce9b7ed3?w=800&auto=format&fit=crop",
+      title: "Hair Spa Treatment",
+      price: 50,
+      location: "Velora Beauty Lounge",
+      description:
+        "Nourishing hair spa that repairs damage and restores shine and strength.",
+    },
+    {
+      image:
+        "https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=800&auto=format&fit=crop",
+      title: "Bridal Makeup",
+      price: 120,
+      location: "Velora Beauty Lounge",
+      description:
+        "Professional bridal makeup for a flawless, camera-ready wedding look.",
     },
   ];
   return (
@@ -68,6 +126,21 @@ export default function ServiceDetailsContent() {
           onViewProfile={() => console.log("View Profile clicked")}
           onContact={() => console.log("Contact clicked")}
         />
+        //    <div>
+
+        //      {/* <div className="space-y-6 overflow-y-auto">
+        //        {services.map((serv, i) => (
+        //          <ServiceCard
+        //            key={i}
+        //            image={serv.image}
+        //            title={serv.title}
+        //            price={serv.price}
+        //            location={serv.location}
+        //            description={serv.description}
+        //          />
+        //        ))}
+        //      </div> */}
+        //    </div>
       }
     />
   );

@@ -13,7 +13,11 @@ export const DescriptionCard: React.FC<DescriptionCardProps> = ({
   description,
 }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden max-w-md w-full">
+    <div
+      className="bg-white rounded-2xl overflow-hidden w-full border border-[#D1D1D1]"
+      style={{
+        boxShadow: "0 1px 12px 0 rgba(0, 0, 0, 0.05",
+      }}>
       {/* Image Section */}
       <div className="relative w-full aspect-4/3">
         <Image
