@@ -4,6 +4,7 @@ import PageLayout from "@/components/layouts/PageLayout";
 import { ServiceSummaryCard } from "./ServiceSummaryCard";
 import { DescriptionCard } from "./DescriptionCard";
 import { ArtistProfileCard } from "./ArtistProfileCard";
+import ProductReview from "./ProductReview";
 
 export default function ServiceDetailsContent() {
   const makeupServices = [
@@ -28,28 +29,32 @@ export default function ServiceDetailsContent() {
       layout={"two-column-left-large"}
       stickyRight={true}
       leftColumn={
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <DescriptionCard
-            image="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80"
-            title="Description"
-            description="Lorem ipsum dolor sit amet consectetur. Justo posuere in in non nunc lacinia in consectetur. Elementum lobortis eros arcu scelerisque. Vitae tristique suscipit iaculis nibh. Mauris sodales interdum dictumst enim vulputate. Vitae molestie ac dignissim gravida malesuada."
-          />
+        <div className="w-full space-y-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <DescriptionCard
+              image="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800&q=80"
+              title="Description"
+              description="Lorem ipsum dolor sit amet consectetur. Justo posuere in in non nunc lacinia in consectetur. Elementum lobortis eros arcu scelerisque. Vitae tristique suscipit iaculis nibh. Mauris sodales interdum dictumst enim vulputate. Vitae molestie ac dignissim gravida malesuada."
+            />
 
-          <ServiceSummaryCard
-            serviceName="Gel Manicure"
-            rating={4.9}
-            duration="45-60 Min(Approx)"
-            reviewsCount={150}
-            bookedCount={178}
-            bookedDays={10}
-            currentPrice={199}
-            originalPrice={219}
-            discountPercentage={25}
-            about_sections={makeupServices}
-            onBookSlot={() => console.log("Book Slot clicked")}
-            onShare={() => console.log("Share clicked")}
-            onBookmark={() => console.log("Bookmark clicked")}
-          />
+            <ServiceSummaryCard
+              serviceName="Gel Manicure"
+              rating={4.9}
+              duration="45-60 Min(Approx)"
+              reviewsCount={150}
+              bookedCount={178}
+              bookedDays={10}
+              currentPrice={199}
+              originalPrice={219}
+              discountPercentage={25}
+              about_sections={makeupServices}
+              onBookSlot={() => console.log("Book Slot clicked")}
+              onShare={() => console.log("Share clicked")}
+              onBookmark={() => console.log("Bookmark clicked")}
+            />
+          </div>
+
+          <ProductReview />
         </div>
       }
       rightColumn={
