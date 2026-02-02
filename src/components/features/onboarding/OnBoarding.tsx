@@ -7,7 +7,7 @@ const OnBoardingPages: React.FC = () => {
 
   return (
     <div className="bg-white p-2 h-screen overflow-hidden">
-      <svg width={0} height={0} className="absolute" aria-hidden>
+      <svg width={0} height={0} className="absolute" aria-hidden="true">
         <defs>
           <clipPath
             id={INVERTED_CORNERS_CLIP}
