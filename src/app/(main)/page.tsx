@@ -130,7 +130,7 @@ export default function UserHomePage() {
                   id: "edit-profile",
                   label: "Edit Profile",
                   icon: <EditIcon width={20} height={20} fill="currentColor" />,
-                  onClick: () => console.log("Edit Profile clicked"),
+                  onClick: () => router.push("/profile/edit"),
                 },
                 {
                   id: "log-out",

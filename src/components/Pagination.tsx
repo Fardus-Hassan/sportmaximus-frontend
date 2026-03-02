@@ -55,21 +55,29 @@ export default function Pagination({
   return (
     <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 ${className}`}>
       {/* Items per page */}
-      <div className="flex items-center gap-2 text-sm text-text-primary/60">
+      <div className="flex items-center gap-1.5 text-sm text-text-primary/60">
         <span>Showing</span>
-        {onItemsPerPageChange ? (
+        <div className="relative inline-flex items-center">
           <select
             value={itemsPerPage}
-            onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
-            className="px-2 py-1 border border-black/10 rounded-lg bg-white text-text-primary focus:outline-none focus:ring-2 focus:ring-primary/40"
+            onChange={(e) => onItemsPerPageChange?.(Number(e.target.value))}
+            className="appearance-none pl-2 pr-6 py-1 text-text-primary font-medium bg-transparent cursor-pointer focus:outline-none"
           >
             <option value={10}>10</option>
+            <option value={11}>11</option>
             <option value={20}>20</option>
             <option value={50}>50</option>
           </select>
-        ) : (
-          <span className="text-text-primary font-medium">{itemsPerPage}</span>
-        )}
+          <svg 
+            className="absolute right-1 pointer-events-none text-text-primary/40" 
+            width="12" 
+            height="12" 
+            viewBox="0 0 24 24" 
+            fill="none"
+          >
+            <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
         <span>out of {totalItems.toLocaleString()}</span>
       </div>
 

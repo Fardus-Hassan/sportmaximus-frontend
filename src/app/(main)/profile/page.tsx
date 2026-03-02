@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Container from "@/components/Container";
 import PageLayout from "@/components/PageLayout";
 import UserProfileHeader from "@/components/UserProfileHeader";
@@ -70,6 +71,7 @@ const mockAppointments = [
 ];
 
 export default function UserProfilePage() {
+  const router = useRouter();
   const { user, logout } = useAuth();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 11;
@@ -94,7 +96,7 @@ export default function UserProfilePage() {
       id: "edit-profile",
       label: "Edit Profile",
       icon: <EditIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Edit Profile"),
+      onClick: () => router.push("/profile/edit"),
     },
     {
       id: "logout",
@@ -130,7 +132,7 @@ export default function UserProfilePage() {
               location="Dhaka,Bangladesh"
               totalServicesTaken={225}
               isOwnProfile={true}
-              onEditProfile={() => console.log("Edit Profile")}
+              onEditProfile={() => router.push("/profile/edit")}
               onChangeCover={() => console.log("Change Cover")}
               onChangeAvatar={() => console.log("Change Avatar")}
             />
