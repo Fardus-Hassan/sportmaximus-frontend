@@ -81,10 +81,10 @@ export default function UserProfileHeader({
             {isOwnProfile && (
               <button
                 onClick={onChangeAvatar}
-                className="absolute bottom-3 right-3 w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white hover:opacity-90 transition-opacity shadow-sm"
+                className="absolute sm:bottom-3 bottom-0 sm:right-3 right-0 w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white hover:opacity-90 transition-opacity shadow-sm"
                 aria-label="Change profile photo"
               >
-                <CameraIcon width={16} height={16} className="text-white" />
+                <CameraIcon width={20} height={20} className="text-white" />
               </button>
             )}
           </div>
