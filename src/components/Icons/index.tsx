@@ -24,3 +24,8 @@ export { default as EyeOffIcon } from './EyeOffIcon';
 export { default as KeyIcon } from './KeyIcon';
 export { default as MenuIcon } from './MenuIcon';
 export { default as CloseIcon } from './CloseIcon';
+export { default as LogoutIcon } from './LogoutIcon';
+export { default as CameraIcon } from './CameraIcon';
+export { default as ClockIcon } from './ClockIcon';
+export { default as CreditCardIcon } from './CreditCardIcon';
+export { default as GlobeIcon } from './GlobeIcon';

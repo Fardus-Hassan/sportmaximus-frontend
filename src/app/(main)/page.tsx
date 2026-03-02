@@ -1,14 +1,16 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import PageLayout from "@/components/PageLayout";
 import Container from "@/components/Container";
 import SearchBar from "@/components/SearchBar";
 import UserInfoSideBar from "@/components/UserInfoSideBar";
 import ServiceCard from "@/components/ServiceCard";
 import TrendingServices from "@/components/TrendingServices";
-import { EditIcon } from "@/components/Icons";
+import { EditIcon, BookmarkIcon, DocumentIcon, LogoutIcon } from "@/components/Icons";
 
 export default function UserHomePage() {
+  const router = useRouter();
   const services = [
     {
       id: "service-1",
@@ -113,6 +115,18 @@ export default function UserHomePage() {
               }}
               menuItems={[
                 {
+                  id: "transaction-history",
+                  label: "Transaction History",
+                  icon: <DocumentIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Transaction History clicked"),
+                },
+                {
+                  id: "bookmarks",
+                  label: "Bookmarks",
+                  icon: <BookmarkIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Bookmarks clicked"),
+                },  
+                {
                   id: "edit-profile",
                   label: "Edit Profile",
                   icon: <EditIcon width={20} height={20} fill="currentColor" />,
@@ -121,11 +135,11 @@ export default function UserHomePage() {
                 {
                   id: "log-out",
                   label: "Log Out",
-                  icon: <EditIcon width={20} height={20} fill="currentColor" />,
+                  icon: <LogoutIcon width={20} height={20} className="text-current" />,
                   onClick: () => console.log("Log Out clicked"),
                 },
               ]}
-              onViewProfile={() => console.log("View Profile clicked")}
+              onViewProfile={() => router.push("/profile")}
             />
           }
           middleColumn={
