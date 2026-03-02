@@ -1,139 +1,97 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import Container from "@/components/Container";
+import { useRouter } from "next/navigation";
 import PageLayout from "@/components/PageLayout";
 import ParlorProfileHeader from "@/components/ParlorProfileHeader";
-import ProfileMenuCard from "@/components/ProfileMenuCard";
-import ServiceCard from "@/components/ServiceCard";
-import TrendingServices from "@/components/TrendingServices";
+import ServiceCardSimple from "@/components/ServiceCardSimple";
+import ArtistCard from "@/components/ArtistCard";
+import ReviewForm from "@/components/ReviewForm";
+import ReviewCard from "@/components/ReviewCard";
 import Pagination from "@/components/Pagination";
-import { useAuth } from "@/contexts/AuthContext";
-import { DocumentIcon, EditIcon, LogoutIcon, CalendarIcon, StarIcon, UserIcon } from "@/components/Icons";
-
-const mockServices = [
-  {
-    id: "service-1",
-    businessName: "Velora Beauty Lounge",
-    businessAvatar: "https://images.pexels.com/photos/3997391/pexels-photo-3997391.jpeg?auto=compress&cs=tinysrgb&w=100",
-    location: "Dhaka, Bangladesh",
-    rating: 4.9,
-    serviceTitle: "Bridal Makeup Package",
-    serviceDescription: "Complete bridal transformation including makeup, hair styling, and touch-ups throughout the day.",
-    media: [
-      { type: "image" as const, url: "https://images.pexels.com/photos/3997391/pexels-photo-3997391.jpeg?auto=compress&cs=tinysrgb&w=800" },
-    ],
-    price: "$250",
-    likes: 3500,
-    comments: 245,
-    shares: 120,
-  },
-  {
-    id: "service-2",
-    businessName: "Velora Beauty Lounge",
-    businessAvatar: "https://images.pexels.com/photos/3997391/pexels-photo-3997391.jpeg?auto=compress&cs=tinysrgb&w=100",
-    location: "Dhaka, Bangladesh",
-    rating: 4.9,
-    serviceTitle: "Spa Day Package",
-    serviceDescription: "Full day relaxation including massage, facial, manicure, pedicure, and refreshments.",
-    media: [
-      { type: "image" as const, url: "https://images.pexels.com/photos/3997391/pexels-photo-3997391.jpeg?auto=compress&cs=tinysrgb&w=800" },
-    ],
-    price: "$180",
-    likes: 2100,
-    comments: 178,
-    shares: 89,
-  },
-];
-
-const mockBeauticians = [
-  {
-    id: "beautician-1",
-    name: "Nila Akter",
-    avatar: "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100",
-    specialization: "Nail Technician",
-    rating: 4.9,
-    reviewCount: 156,
-  },
-  {
-    id: "beautician-2",
-    name: "Sadia Rahman",
-    avatar: "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100",
-    specialization: "Makeup Artist",
-    rating: 4.8,
-    reviewCount: 234,
-  },
-  {
-    id: "beautician-3",
-    name: "Fatima Khan",
-    avatar: "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100",
-    specialization: "Hair Stylist",
-    rating: 4.7,
-    reviewCount: 189,
-  },
-];
-
-const mockReviews = [
-  {
-    id: "review-1",
-    userName: "Sarah Johnson",
-    userAvatar: "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100",
-    rating: 5,
-    comment: "Best salon in town! The ambiance is amazing and the staff is so professional.",
-    date: "2 days ago",
-  },
-  {
-    id: "review-2",
-    userName: "Maria Garcia",
-    userAvatar: "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=100",
-    rating: 5,
-    comment: "Had my bridal makeup done here. Absolutely loved the results!",
-    date: "1 week ago",
-  },
-];
+import ManagerCard from "@/components/ManagerCard";
+import TrendingServices from "@/components/TrendingServices";
+import Container from "@/components/Container";
 
 export default function ParlorProfilePage() {
-  const { role } = useAuth();
-  const [activeTab, setActiveTab] = useState<"services" | "beauticians" | "reviews" | "gallery">("services");
-  const [currentPage, setCurrentPage] = useState(1);
-  const isOwnProfile = role === "parlor";
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState<"services" | "artists" | "reviews">("services");
+  const [serviceCurrentPage, setServiceCurrentPage] = useState(1);
+  const [serviceItemsPerPage, setServiceItemsPerPage] = useState(11);
+  const [artistCurrentPage, setArtistCurrentPage] = useState(1);
+  const [artistItemsPerPage, setArtistItemsPerPage] = useState(11);
+  const [reviewCurrentPage, setReviewCurrentPage] = useState(1);
+  const [reviewItemsPerPage, setReviewItemsPerPage] = useState(11);
 
-  const menuItems = isOwnProfile ? [
-    {
-      id: "appointments",
-      label: "Manage Appointments",
-      icon: <CalendarIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Manage Appointments"),
-      variant: "primary" as const,
-    },
-    {
-      id: "earnings",
-      label: "Earnings & Reports",
-      icon: <DocumentIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Earnings"),
-    },
-    {
-      id: "manage-team",
-      label: "Manage Team",
-      icon: <UserIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Manage Team"),
-    },
-    {
-      id: "edit-profile",
-      label: "Edit Profile",
-      icon: <EditIcon width={20} height={20} fill="currentColor" />,
-      onClick: () => console.log("Edit Profile"),
-    },
-    {
-      id: "logout",
-      label: "Log Out",
-      icon: <LogoutIcon width={20} height={20} className="text-current" />,
-      onClick: () => console.log("Logout"),
-      variant: "danger" as const,
-    },
-  ] : [];
+  // Mock Parlor Data
+  const parlorData = {
+    id: "1",
+    name: "Velora Beauty Lounge",
+    avatar: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=200&h=200&fit=crop",
+    coverImage: "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&h=400&fit=crop",
+    description: "Where modern beauty meets neo-precision, comfort, confidence, and personalized care.",
+    referenceId: "123456",
+    rating: 4.9,
+    totalServices: 225,
+    totalArtists: 50,
+    joinedDate: "21 Aug,2025",
+    location: "Dhaka,Bangladesh",
+    email: "velorap03@gmailcom",
+    phone: "+8801695202314",
+    facebookUrl: "https://facebook.com/velora",
+    twitterUrl: "https://twitter.com/velora",
+    instagramUrl: "https://instagram.com/velora",
+  };
 
+  // Mock Manager Data
+  const managerData = {
+    name: "Payel Ahmed",
+    role: "Shop Manager",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop",
+    email: "payelahmed03@gmail.com",
+    phone: "+8801695202314",
+  };
+
+  // Mock Services Data
+  const services = Array.from({ length: 12 }, (_, i) => ({
+    id: `service-${i + 1}`,
+    serviceName: ["French Tips", "Nail Art", "Acrylic Nails", "Gel Manicure", "Nail Extensions", "Pedicure"][i % 6],
+    serviceImage: `https://images.unsplash.com/photo-${[
+      "1604654894610-df63bc536371",
+      "1519014816548-bf5fe059798b",
+      "1571290274554-2d8dc79f8eb9",
+      "1610992015732-2449b2b3ddef",
+      "1634726282030-3e0c2d17e7e4",
+      "1607779097040-26e80aa27daa"
+    ][i % 6]}?w=400&h=300&fit=crop`,
+    price: "$30",
+    providerName: "Velora Beauty Lounge",
+    description: "A long-lasting, glossy manicure that keeps your nails flawless for weeks.",
+    isSaved: i === 0 || i === 3,
+  }));
+
+  // Mock Artists Data
+  const artists = Array.from({ length: 12 }, (_, i) => ({
+    id: `artist-${i + 1}`,
+    name: "Sarah Johnson",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=400&fit=crop",
+    specialization: "Nail Technician",
+    parlorName: "Velora Beauty Lounge",
+    rating: 4.9,
+    isSaved: i === 2 || i === 5,
+  }));
+
+  // Mock Reviews Data
+  const reviews = Array.from({ length: 10 }, (_, i) => ({
+    id: `review-${i + 1}`,
+    userName: "Sophia Clark",
+    userEmail: "sophiaclark003@gmail.com",
+    userAvatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
+    rating: 4,
+    comment: "Excellent service and a great selection of cars. The staff was knowledgeable and helpful throughout the entire process.",
+  }));
+
+  // Mock Trending Services
   const trendingServices = [
     { id: "1", serviceName: "Natural Makeup Service", providerName: "Velora Beauty Lounge" },
     { id: "2", serviceName: "Ombre Gel Nails", providerName: "Velora Beauty Lounge" },
@@ -142,165 +100,136 @@ export default function ParlorProfilePage() {
     { id: "5", serviceName: "Acrylic Nails", providerName: "Velora Beauty Lounge" },
   ];
 
+  const totalServicePages = Math.ceil(1450 / serviceItemsPerPage);
+  const totalArtistPages = Math.ceil(1450 / artistItemsPerPage);
+  const totalReviewPages = Math.ceil(1450 / reviewItemsPerPage);
+
+  const handleReviewSubmit = (rating: number, comment: string) => {
+    console.log("Review submitted:", { rating, comment });
+  };
+
   return (
-    <Container className="py-6 sm:py-8">
+    <Container className="py-6 sm:py-8 mt-12">
       <PageLayout
-        layout="three-column"
+        layout="two-column-left-large"
         stickyRight={true}
-        leftColumn={null}
-        middleColumn={
+        hideScrollbar={true}
+        leftColumn={
           <div className="space-y-6">
-            {/* Profile Header */}
+            {/* Parlor Header */}
             <ParlorProfileHeader
-              name="Velora Beauty Lounge"
-              avatar="https://images.pexels.com/photos/3997391/pexels-photo-3997391.jpeg?auto=compress&cs=tinysrgb&w=400"
-              coverImage="https://images.pexels.com/photos/705255/pexels-photo-705255.jpeg?auto=compress&cs=tinysrgb&w=1200"
-              description="Premium beauty parlor offering a wide range of services including bridal makeup, hair styling, nail art, and spa treatments. Our skilled team ensures you leave feeling beautiful and confident."
-              joinedDate="2019"
-              location="Gulshan, Dhaka"
-              rating={4.9}
-              reviewCount={523}
-              totalServices={45}
-              totalBeauticians={12}
-              workingHours="9:00 AM - 9:00 PM"
-              isOwnProfile={isOwnProfile}
-              isVerified={true}
-              onEditProfile={() => console.log("Edit Profile")}
-              onViewServices={() => console.log("View Services")}
-              onContact={() => console.log("Contact")}
+              {...parlorData}
+              onMessage={() => console.log("Message")}
+              onShare={() => console.log("Share")}
             />
 
-            {/* Tabs */}
-            <div className="bg-white rounded-xl shadow-sm">
-              <div className="flex border-b border-black/5 overflow-x-auto">
-                {(["services", "beauticians", "reviews", "gallery"] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`flex-1 min-w-[100px] py-4 text-sm font-medium transition-colors capitalize whitespace-nowrap ${
-                      activeTab === tab
-                        ? "text-purple-500 border-b-2 border-purple-500"
-                        : "text-text-primary/60 hover:text-text-primary"
-                    }`}
-                  >
-                    {tab}
-                  </button>
+            {/* Available Services Section */}
+            <div className="">
+              <h2 className="text-lg font-bold text-text-primary mb-4">Available Services</h2>
+
+              {/* Services Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {services.slice(0, 6).map((service) => (
+                  <ServiceCardSimple
+                    key={service.id}
+                    {...service}
+                    onBookNow={() => router.push(`/services/${service.id}`)}
+                    onSave={() => console.log("Save", service.id)}
+                  />
                 ))}
               </div>
 
-              <div className="p-5 sm:p-6">
-                {activeTab === "services" && (
-                  <div className="space-y-4">
-                    {mockServices.map((service) => (
-                      <ServiceCard
-                        key={service.id}
-                        {...service}
-                        onBookNow={() => console.log("Book Now")}
-                        onLike={() => console.log("Like")}
-                        onComment={() => console.log("Comment")}
-                        onShare={() => console.log("Share")}
-                        onSave={() => console.log("Save")}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                {activeTab === "beauticians" && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {mockBeauticians.map((beautician) => (
-                      <div key={beautician.id} className="p-4 border border-black/5 rounded-xl hover:border-purple-200 transition-colors cursor-pointer">
-                        <div className="flex items-center gap-3">
-                          <Image
-                            src={beautician.avatar}
-                            alt={beautician.name}
-                            width={56}
-                            height={56}
-                            className="w-14 h-14 rounded-full object-cover"
-                          />
-                          <div className="flex-1">
-                            <h4 className="font-semibold text-text-primary">{beautician.name}</h4>
-                            <p className="text-sm text-text-primary/60">{beautician.specialization}</p>
-                            <div className="flex items-center gap-1 mt-1">
-                              <StarIcon width={14} height={14} fill="#FFD700" />
-                              <span className="text-sm font-medium text-text-primary">{beautician.rating}</span>
-                              <span className="text-xs text-text-primary/40">({beautician.reviewCount})</span>
-                            </div>
-                          </div>
-                          <button className="px-3 py-1.5 bg-purple-500 text-white text-sm rounded-lg hover:opacity-90 transition-opacity">
-                            View
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {activeTab === "reviews" && (
-                  <div className="space-y-4">
-                    {mockReviews.map((review) => (
-                      <div key={review.id} className="p-4 border border-black/5 rounded-xl">
-                        <div className="flex items-start gap-3">
-                          <Image
-                            src={review.userAvatar}
-                            alt={review.userName}
-                            width={40}
-                            height={40}
-                            className="w-10 h-10 rounded-full object-cover"
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <h4 className="font-semibold text-text-primary">{review.userName}</h4>
-                              <span className="text-xs text-text-primary/40">{review.date}</span>
-                            </div>
-                            <div className="flex items-center gap-1 mt-1">
-                              {[...Array(5)].map((_, i) => (
-                                <StarIcon
-                                  key={i}
-                                  width={14}
-                                  height={14}
-                                  fill={i < review.rating ? "#FFD700" : "#E5E7EB"}
-                                />
-                              ))}
-                            </div>
-                            <p className="text-sm text-text-primary/70 mt-2">{review.comment}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {activeTab === "gallery" && (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-                      <div key={i} className="aspect-square rounded-xl overflow-hidden bg-black/5">
-                        <Image
-                          src={`https://images.pexels.com/photos/3997391/pexels-photo-3997391.jpeg?auto=compress&cs=tinysrgb&w=400`}
-                          alt={`Gallery ${i}`}
-                          width={200}
-                          height={200}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform cursor-pointer"
-                        />
-                      </div>
-                    ))}
-                  </div>
-                )}
+              {/* Services Pagination */}
+              <div className="mt-6">
+                <Pagination
+                  currentPage={serviceCurrentPage}
+                  totalPages={totalServicePages}
+                  totalItems={1450}
+                  itemsPerPage={serviceItemsPerPage}
+                  onPageChange={setServiceCurrentPage}
+                  onItemsPerPageChange={setServiceItemsPerPage}
+                />
               </div>
             </div>
 
-            {/* Pagination */}
-            <Pagination
-              currentPage={currentPage}
-              totalPages={10}
-              totalItems={100}
-              itemsPerPage={10}
-              onPageChange={setCurrentPage}
-            />
+            {/* Available Artists Section */}
+            <div className="">
+              <h2 className="text-lg font-bold text-text-primary mb-4">Available Artists</h2>
+
+              {/* Artists Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+                {artists.slice(0, 6).map((artist) => (
+                  <ArtistCard
+                    key={artist.id}
+                    {...artist}
+                    onBookNow={() => router.push(`/beautician/${artist.id}`)}
+                    onSave={() => console.log("Save", artist.id)}
+                  />
+                ))}
+              </div>
+
+              {/* Artists Pagination */}
+              <div className="mt-6">
+                <Pagination
+                  currentPage={artistCurrentPage}
+                  totalPages={totalArtistPages}
+                  totalItems={1450}
+                  itemsPerPage={artistItemsPerPage}
+                  onPageChange={setArtistCurrentPage}
+                  onItemsPerPageChange={setArtistItemsPerPage}
+                />
+              </div>
+            </div>
+
+            {/* Public Reviews Section */}
+            <div className="">
+              <h2 className="text-lg font-bold text-text-primary mb-1">
+                Public Reviews
+                <span className="text-primary font-normal ml-1">({reviews.length * 15} Reviews)</span>
+              </h2>
+
+              {/* Review Form */}
+              <div className="mt-4">
+                <ReviewForm
+                  userName="Sara Chen"
+                  userEmail="sophiaclark003@gmail.com"
+                  userAvatar="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop"
+                  onSubmit={handleReviewSubmit}
+                  className="shadow-none border border-black/5"
+                />
+              </div>
+
+              {/* Reviews List */}
+              <div className="mt-4 space-y-4">
+                {reviews.slice(0, 3).map((review) => (
+                  <ReviewCard
+                    key={review.id}
+                    {...review}
+                    className="shadow-none border border-black/5"
+                  />
+                ))}
+              </div>
+
+              {/* Reviews Pagination */}
+              <div className="mt-6">
+                <Pagination
+                  currentPage={reviewCurrentPage}
+                  totalPages={totalReviewPages}
+                  totalItems={1450}
+                  itemsPerPage={reviewItemsPerPage}
+                  onPageChange={setReviewCurrentPage}
+                  onItemsPerPageChange={setReviewItemsPerPage}
+                />
+              </div>
+            </div>
           </div>
         }
         rightColumn={
           <div className="space-y-4">
-            {isOwnProfile && <ProfileMenuCard items={menuItems} />}
+            {/* Manager Card */}
+            <ManagerCard {...managerData} />
+
+            {/* Trending Services */}
             <TrendingServices services={trendingServices} />
           </div>
         }
