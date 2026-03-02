@@ -3,12 +3,44 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import Container from "@/components/Container";
-import { BellIcon, Logo, MailIcon, MenuIcon, CloseIcon, StarIcon, LocationIcon, UserIcon, BookmarkIcon, EditIcon, DocumentIcon } from "@/components/Icons";
+import { BellIcon, Logo, MailIcon, MenuIcon, StarIcon, LocationIcon, UserIcon, BookmarkIcon, EditIcon } from "@/components/Icons";
 
-const navItems = ["Home", "Services", "Beauticians", "Appointments"] as const;
+type UserRole = "user" | "parlor" | "beautician" | "admin";
 
-// Mock profile data - replace with actual data
+interface NavItem {
+  label: string;
+  href: string;
+}
+
+const roleNavItems: Record<UserRole, NavItem[]> = {
+  user: [
+    { label: "Home", href: "/" },
+    { label: "Services", href: "/services" },
+    { label: "Beauticians", href: "/beauticians" },
+    { label: "My Bookings", href: "/bookings" },
+  ],
+  parlor: [
+    { label: "Dashboard", href: "/parlor" },
+    { label: "Bookings", href: "/parlor/bookings" },
+    { label: "Team", href: "/parlor/team" },
+    { label: "Services", href: "/parlor/services" },
+  ],
+  beautician: [
+    { label: "Dashboard", href: "/beautician" },
+    { label: "Schedule", href: "/beautician/schedule" },
+    { label: "Portfolio", href: "/beautician/portfolio" },
+    { label: "Earnings", href: "/beautician/earnings" },
+  ],
+  admin: [
+    { label: "Dashboard", href: "/admin" },
+    { label: "Users", href: "/admin/users" },
+    { label: "Parlors", href: "/admin/parlors" },
+    { label: "Reports", href: "/admin/reports" },
+  ],
+};
+
 const mockProfile = {
   name: "John Doe",
   avatar: "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=200",
@@ -24,12 +56,25 @@ const mockProfile = {
 const menuItems = [
   { id: "bookmarks", label: "Bookmarks", icon: <BookmarkIcon width={20} height={20} fill="currentColor" /> },
   { id: "edit", label: "Edit Profile", icon: <EditIcon width={20} height={20} fill="currentColor" /> },
-
-  // { id: "documents", label: "Documents", icon: <DocumentIcon width={20} height={20} fill="currentColor" /> },
 ];
 
+function getCurrentRole(pathname: string): UserRole {
+  if (pathname.startsWith("/admin")) return "admin";
+  if (pathname.startsWith("/parlor")) return "parlor";
+  if (pathname.startsWith("/beautician")) return "beautician";
+  return "user";
+}
+
 export default function Navbar() {
+  const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentRole, setCurrentRole] = useState<UserRole>("user");
+
+  useEffect(() => {
+    setCurrentRole(getCurrentRole(pathname));
+  }, [pathname]);
+
+  const navItems = roleNavItems[currentRole];
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -62,12 +107,13 @@ export default function Navbar() {
 
           {/* Middle: Nav */}
           <nav className="hidden lg:flex items-center justify-center gap-10 xl:w-[50%]">
-            {navItems.map((label) => {
-              const isActive = label === "Home";
+            {navItems.map((item) => {
+              const isActive = pathname === item.href || 
+                (item.href !== "/" && pathname.startsWith(item.href));
               return (
                 <Link
-                  key={label}
-                  href="#"
+                  key={item.href}
+                  href={item.href}
                   className={[
                     "text-sm font-medium transition-colors",
                     isActive
@@ -75,7 +121,7 @@ export default function Navbar() {
                       : "text-text-primary/60 hover:text-text-primary",
                   ].join(" ")}
                 >
-                  {label}
+                  {item.label}
                   {isActive && (
                     <span className="block h-[3px] w-full bg-primary rounded" />
                   )}
@@ -86,6 +132,18 @@ export default function Navbar() {
 
           {/* Right: Actions */}
           <div className="flex justify-end items-center gap-4 xl:w-[25%]">
+            {/* Role Badge */}
+            {/* <div className="hidden lg:flex items-center gap-2">
+              <span className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${
+                currentRole === "admin" ? "bg-red-100 text-red-700" :
+                currentRole === "parlor" ? "bg-purple-100 text-purple-700" :
+                currentRole === "beautician" ? "bg-green-100 text-green-700" :
+                "bg-blue-100 text-blue-700"
+              }`}>
+                {currentRole}
+              </span>
+            </div> */}
+
             <button
               type="button"
               className="relative inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-text-primary/70 hover:text-text-primary hover:bg-black/3 transition-colors cursor-pointer"
@@ -230,12 +288,13 @@ export default function Navbar() {
               {/* Navigation Items */}
               <div className="p-2">
                 <div className="space-y-1">
-                  {navItems.map((label) => {
-                    const isActive = label === "Home";
+                  {navItems.map((item) => {
+                    const isActive = pathname === item.href || 
+                      (item.href !== "/" && pathname.startsWith(item.href));
                     return (
                       <Link
-                        key={label}
-                        href="#"
+                        key={item.href}
+                        href={item.href}
                         onClick={() => setIsMobileMenuOpen(false)}
                         className={[
                           "flex items-center px-4 py-3 rounded-lg text-sm font-medium transition-colors",
@@ -244,10 +303,32 @@ export default function Navbar() {
                             : "text-text-primary/70 hover:bg-black/5 hover:text-text-primary",
                         ].join(" ")}
                       >
-                        {label}
+                        {item.label}
                       </Link>
                     );
                   })}
+                </div>
+              </div>
+
+              {/* Role Switcher (Demo) */}
+              <div className="p-2 border-t border-black/10 mt-2">
+                <p className="px-4 py-2 text-xs font-semibold text-text-primary/40 uppercase">Switch Role (Demo)</p>
+                <div className="space-y-1">
+                  {(["user", "parlor", "beautician", "admin"] as UserRole[]).map((role) => (
+                    <Link
+                      key={role}
+                      href={role === "user" ? "/" : `/${role}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={[
+                        "flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors capitalize",
+                        currentRole === role
+                          ? "bg-primary/10 text-primary"
+                          : "text-text-primary/70 hover:bg-black/5 hover:text-text-primary",
+                      ].join(" ")}
+                    >
+                      {role === "user" ? "User" : role === "parlor" ? "Parlor" : role === "beautician" ? "Beautician" : "Admin"}
+                    </Link>
+                  ))}
                 </div>
               </div>
 
