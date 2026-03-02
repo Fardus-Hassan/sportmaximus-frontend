@@ -153,7 +153,7 @@ export default function ServicesPage() {
                   key={service.id}
                   {...service}
                   isSaved={savedServices.includes(service.id)}
-                  onBookNow={() => console.log("Book Now", service.id)}
+                  onBookNow={() => router.push(`/services/${service.id}`)}
                   onMessage={() => console.log("Message", service.id)}
                   onSave={() => toggleSave(service.id)}
                 />

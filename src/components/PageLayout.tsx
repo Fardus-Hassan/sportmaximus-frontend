@@ -10,6 +10,7 @@ interface PageLayoutProps {
   stickyLeft?: boolean;
   stickyMiddle?: boolean;
   stickyRight?: boolean;
+  hideScrollbar?: boolean;
   className?: string;
 }
 
@@ -21,8 +22,10 @@ export default function PageLayout({
   stickyLeft = false,
   stickyMiddle = false,
   stickyRight = false,
+  hideScrollbar = false,
   className = '',
 }: PageLayoutProps) {
+  const scrollbarClass = hideScrollbar ? 'hide-scrollbar' : '';
   // Three column layout: middle large, sides small and equal
   // Responsive: Large (lg+) = 3 columns, Medium (md) = 2 columns (left small + middle large), Small = 1 column (middle only)
   if (layout === 'three-column') {
@@ -78,9 +81,9 @@ export default function PageLayout({
 
         {/* Right Column - Small, hidden on small screens */}
         {rightColumn && (
-          <aside
+          <aside 
             className={`hidden md:block w-1/4 shrink-0 ${
-              stickyRight ? 'sticky top-20 h-screen overflow-y-auto' : ''
+              stickyRight ? `sticky top-20 ${scrollbarClass}` : ''
             }`}
           >
             {rightColumn}
