@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Container from "@/components/Container";
 import { FacebookIcon, InstagramIcon, Logo, XIcon } from "@/components/Icons";
 
@@ -77,15 +78,15 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-x-10 gap-y-3 text-sm text-text-primary/70">
-            <a href="#" className="hover:text-text-primary transition-colors">
+            <Link href="/contact" className="hover:text-text-primary transition-colors">
               Contact Us
-            </a>
-            <a href="#" className="hover:text-text-primary transition-colors">
+            </Link>
+            <Link href="/terms-of-use" className="hover:text-text-primary transition-colors">
               Terms of Use
-            </a>
-            <a href="#" className="hover:text-text-primary transition-colors">
+            </Link>
+            <Link href="/privacy-policy" className="hover:text-text-primary transition-colors">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
       </Container>

@@ -63,7 +63,7 @@ function getCurrentRole(pathname: string): UserRole {
   if (pathname.startsWith("/parlor")) return "parlor";
   // Only treat `/beautician/...` detail/dashboard routes as beautician,
   // keep `/beauticians` listing under the default user navigation.
-  if (pathname.startsWith("/beautician/")) return "beautician";
+  // if (pathname.startsWith("/beautician/")) return "beautician";
   return "user";
 }
 
