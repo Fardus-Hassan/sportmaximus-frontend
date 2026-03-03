@@ -19,7 +19,7 @@ const roleNavItems: Record<UserRole, NavItem[]> = {
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
     { label: "Beauticians", href: "/beauticians" },
-    { label: "Appointments", href: "/appointments" },
+    { label: "My Bookings", href: "/bookings" },
   ],
   parlor: [
     { label: "Dashboard", href: "/parlor" },
