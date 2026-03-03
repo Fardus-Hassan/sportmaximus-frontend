@@ -70,6 +70,13 @@ export default function PageLayout({
     return (
       <div className={`mx-auto ${className}`}>
         <div className="flex flex-col md:flex-row gap-6 min-h-screen">
+          {/* Left Column - visible on top for small, sticky aside on md+ */}
+          {leftColumn && (
+            <section className={`md:hidden ${stickyLeftHeight ? scrollbarClass : ''}`}>
+              {leftColumn}
+            </section>
+          )}
+
           {/* Left Column - Hidden on small, visible on medium+ */}
           {leftColumn && (
             <aside

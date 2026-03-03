@@ -93,7 +93,7 @@ export default function Navbar() {
       <header className="w-full bg-white border-b border-black/10 fixed top-0 left-0 right-0 z-50">
         <Container className="h-16 flex items-center justify-between">
           {/* Left: Logo */}
-          <div className="flex items-center gap-3 xl:w-[25%]">
+          <Link href="/" className="flex items-center gap-3 xl:w-[25%] hover:opacity-90 transition-opacity">
             <Logo
               width={28}
               height={28}
@@ -103,7 +103,7 @@ export default function Navbar() {
             <span className="text-lg font-semibold tracking-tight text-primary">
               Beautiworx
             </span>
-          </div>
+          </Link>
 
           {/* Middle: Nav */}
           <nav className="hidden lg:flex items-center justify-center gap-10 xl:w-[50%]">
