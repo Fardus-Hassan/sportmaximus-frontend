@@ -640,7 +640,16 @@ export default function ServiceDetailsPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => router.push("/checkout")}
+                      onClick={() => {
+                        const params = new URLSearchParams();
+                        if (selectedArtist) params.set("artist", selectedArtist.name);
+                        if (selectedDate != null && selectedTime) {
+                          const d = new Date(calendarMonth.year, calendarMonth.month, selectedDate);
+                          const dateStr = d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+                          params.set("dateTime", `${dateStr} • ${selectedTime}`);
+                        }
+                        router.push(`/checkout?${params.toString()}`);
+                      }}
                       className="flex-1 py-3 px-4 rounded-lg font-semibold bg-primary text-white hover:opacity-90 transition-opacity"
                     >
                       Confirm Booking
