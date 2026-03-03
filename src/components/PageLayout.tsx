@@ -10,6 +10,11 @@ interface PageLayoutProps {
   stickyLeft?: boolean;
   stickyMiddle?: boolean;
   stickyRight?: boolean;
+  stickyLeftHeight?: string;
+  stickyMiddleHeight?: string;
+  stickyRightHeight?: string;
+  stickyTop?: string;
+  hideScrollbar?: boolean;
   className?: string;
 }
 
@@ -21,99 +26,139 @@ export default function PageLayout({
   stickyLeft = false,
   stickyMiddle = false,
   stickyRight = false,
+  stickyLeftHeight,
+  stickyMiddleHeight,
+  stickyRightHeight,
+  stickyTop = '5rem',
+  hideScrollbar = false,
   className = '',
 }: PageLayoutProps) {
+  const scrollbarClass = hideScrollbar ? 'hide-scrollbar' : '';
+  
+  const getStickyLeftStyle = (): React.CSSProperties => {
+    if (!stickyLeft) return {};
+    const style: React.CSSProperties = { position: 'sticky', top: stickyTop };
+    if (stickyLeftHeight) {
+      style.maxHeight = stickyLeftHeight;
+      style.overflowY = 'auto';
+    }
+    return style;
+  };
+  
+  const getStickyMiddleStyle = (): React.CSSProperties => {
+    if (!stickyMiddle) return {};
+    const style: React.CSSProperties = { position: 'sticky', top: stickyTop };
+    if (stickyMiddleHeight) {
+      style.maxHeight = stickyMiddleHeight;
+      style.overflowY = 'auto';
+    }
+    return style;
+  };
+  
+  const getStickyRightStyle = (): React.CSSProperties => {
+    if (!stickyRight) return {};
+    const style: React.CSSProperties = { position: 'sticky', top: stickyTop };
+    if (stickyRightHeight) {
+      style.maxHeight = stickyRightHeight;
+      style.overflowY = 'auto';
+    }
+    return style;
+  };
+
   // Three column layout: middle large, sides small and equal
-  // Responsive: Large (lg+) = 3 columns, Medium (md) = 2 columns (left small + middle large), Small = 1 column (middle only)
   if (layout === 'three-column') {
     return (
-      <div className={`flex flex-col md:flex-row gap-6 min-h-screen ${className}`}>
-        {/* Left Column - Hidden on small, visible on medium+ */}
-        {leftColumn && (
-          <aside
-            className={`hidden md:block w-1/4 shrink-0 ${
-              stickyLeft ? 'sticky top-20 h-screen overflow-y-auto' : ''
-            }`}
-          >
-            {leftColumn}
-          </aside>
-        )}
+      <div className={`mx-auto ${className}`}>
+        <div className="flex flex-col md:flex-row gap-6 min-h-screen">
+          {/* Left Column - visible on top for small, sticky aside on md+ */}
+          {leftColumn && (
+            <section className={`md:hidden ${stickyLeftHeight ? scrollbarClass : ''}`}>
+              {leftColumn}
+            </section>
+          )}
 
-        {/* Middle Column - Full width on small, flex-1 on medium+ */}
-        <main
-          className={`w-full md:flex-1 ${
-            stickyMiddle ? 'sticky top-20 h-screen overflow-y-auto' : ''
-          }`}
-        >
-          {middleColumn}
-        </main>
+          {/* Left Column - Hidden on small, visible on medium+ */}
+          {leftColumn && (
+            <aside
+              className={`hidden md:block w-1/4 shrink-0 ${stickyLeft ? `self-start h-fit ${stickyLeftHeight ? scrollbarClass : ''}` : ''}`}
+              style={getStickyLeftStyle()}
+            >
+              {leftColumn}
+            </aside>
+          )}
 
-        {/* Right Column - Hidden on small and medium, visible on large+ */}
-        {rightColumn && (
-          <aside
-            className={`hidden lg:block w-1/4 shrink-0 ${
-              stickyRight ? 'sticky top-20 h-screen overflow-y-auto' : ''
-            }`}
+          {/* Middle Column - Full width on small, flex-1 on medium+ */}
+          <main
+            className={`w-full md:flex-1 ${stickyMiddle ? `self-start h-fit ${stickyMiddleHeight ? scrollbarClass : ''}` : ''}`}
+            style={getStickyMiddleStyle()}
           >
-            {rightColumn}
-          </aside>
-        )}
+            {middleColumn}
+          </main>
+
+          {/* Right Column - Hidden on small and medium, visible on large+ */}
+          {rightColumn && (
+            <aside
+              className={`hidden lg:block w-1/4 shrink-0 ${stickyRight ? `self-start h-fit ${stickyRightHeight ? scrollbarClass : ''}` : ''}`}
+              style={getStickyRightStyle()}
+            >
+              {rightColumn}
+            </aside>
+          )}
+        </div>
       </div>
     );
   }
 
   // Two column layout: left large, right small
-  // Responsive: Medium+ = 2 columns, Small = 1 column (left only)
   if (layout === 'two-column-left-large') {
     return (
-      <div className={`flex flex-col md:flex-row gap-6 min-h-screen ${className}`}>
-        {/* Left Column - Large, full width on small */}
-        <main
-          className={`w-full md:flex-1 ${
-            stickyLeft ? 'sticky top-20 h-screen overflow-y-auto' : ''
-          }`}
-        >
-          {leftColumn}
-        </main>
-
-        {/* Right Column - Small, hidden on small screens */}
-        {rightColumn && (
-          <aside
-            className={`hidden md:block w-1/4 shrink-0 ${
-              stickyRight ? 'sticky top-20 h-screen overflow-y-auto' : ''
-            }`}
+      <div className={`mx-auto ${className}`}>
+        <div className="flex flex-col md:flex-row gap-6 min-h-screen">
+          {/* Left Column - Large, full width on small */}
+          <main
+            className={`w-full md:flex-1 ${stickyLeft ? `self-start h-fit ${stickyLeftHeight ? scrollbarClass : ''}` : ''}`}
+            style={getStickyLeftStyle()}
           >
-            {rightColumn}
-          </aside>
-        )}
+            {leftColumn}
+          </main>
+
+          {/* Right Column - Small, hidden on small screens */}
+          {rightColumn && (
+            <aside 
+              className={`hidden md:block w-1/4 shrink-0 ${stickyRight ? `self-start h-fit ${stickyRightHeight ? scrollbarClass : ''}` : ''}`}
+              style={getStickyRightStyle()}
+            >
+              {rightColumn}
+            </aside>
+          )}
+        </div>
       </div>
     );
   }
 
   // Two column layout: right large, left small
-  // Responsive: Medium+ = 2 columns, Small = 1 column (right only)
   if (layout === 'two-column-right-large') {
     return (
-      <div className={`flex flex-col md:flex-row gap-6 min-h-screen ${className}`}>
-        {/* Left Column - Small, hidden on small screens */}
-        {leftColumn && (
-          <aside
-                className={`hidden md:block w-1/4 shrink-0 ${
-              stickyLeft ? 'sticky top-20 h-screen overflow-y-auto' : ''
-            }`}
-          >
-            {leftColumn}
-          </aside>
-        )}
+      <div className={`mx-auto ${className}`}>
+        <div className="flex flex-col md:flex-row gap-6 min-h-screen">
+          {/* Left Column - Small, hidden on small screens */}
+          {leftColumn && (
+            <aside
+              className={`hidden md:block w-1/4 shrink-0 ${stickyLeft ? `self-start h-fit ${stickyLeftHeight ? scrollbarClass : ''}` : ''}`}
+              style={getStickyLeftStyle()}
+            >
+              {leftColumn}
+            </aside>
+          )}
 
-        {/* Right Column - Large, full width on small */}
-        <main
-          className={`w-full md:flex-1 ${
-            stickyRight ? 'sticky top-20 h-screen overflow-y-auto' : ''
-          }`}
-        >
-          {rightColumn}
-        </main>
+          {/* Right Column - Large, full width on small */}
+          <main
+            className={`w-full md:flex-1 ${stickyRight ? `self-start h-fit ${stickyRightHeight ? scrollbarClass : ''}` : ''}`}
+            style={getStickyRightStyle()}
+          >
+            {rightColumn}
+          </main>
+        </div>
       </div>
     );
   }
