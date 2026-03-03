@@ -8,6 +8,7 @@ import Container from "@/components/Container";
 import PageLayout from "@/components/PageLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { DocumentIcon, BookmarkIcon, EditIcon, LogoutIcon } from "@/components/Icons";
+import UserInfoSideBar from "@/components/UserInfoSideBar";
 
 const DEFAULT_ARTIST_NAME = "Nila Akter";
 const DEFAULT_ARTIST_IMAGE = "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=400";
@@ -82,55 +83,46 @@ export default function CheckoutPage() {
   };
 
   const sidebarContent = (
-    <div className="space-y-6">
-      {/* Profile card - compact */}
-      <div className="bg-white rounded-xl shadow-sm border border-black/5 overflow-hidden p-5">
-        <div className="relative h-24 w-24 mx-auto rounded-full overflow-hidden bg-black/5 mb-4">
-          <Image
-            src={user?.avatar || "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=400"}
-            alt="Profile"
-            fill
-            className="object-cover"
-            unoptimized
-          />
-        </div>
-        <h2 className="text-center font-semibold text-text-primary text-lg">
-          {user ? `${user.firstName} ${user.lastName}` : "Sara Chen"}
-        </h2>
-        <p className="text-center text-sm text-text-primary/60 mt-1">Dhaka, Bangladesh</p>
-        <p className="text-sm text-text-primary/70 mt-3 text-center leading-relaxed">
-          Where modern beauty meets neo precision, comfort, confidence, and personalized care.
-        </p>
-        <Link
-          href="/profile"
-          className="mt-4 w-full inline-block text-center py-2.5 rounded-lg font-medium border-2 border-primary text-primary hover:bg-primary/5 transition-colors"
-        >
-          View Profile
-        </Link>
-      </div>
-
-      {/* Menu */}
-      <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-        <div className="divide-y divide-black/5">
-          {menuItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={item.onClick}
-              className={`group w-full flex items-center gap-3 px-5 py-4 text-left transition-colors ${
-                item.variant === "primary"
-                  ? "bg-primary/10 text-primary hover:bg-primary/15"
-                  : "text-text-primary/70 hover:bg-black/5 hover:text-primary"
-              }`}
-            >
-              <div className={item.variant === "primary" ? "text-primary" : "text-text-primary/50 group-hover:text-primary"}>
-                {item.icon}
-              </div>
-              <span className="text-sm font-medium">{item.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+<UserInfoSideBar
+              role="user"
+              profile={{
+                name: "Sarah Johnson",
+                location: "Dhaka, Bangladesh",
+                distance: "4.5 km",
+                coverImage:
+                  "https://images.pexels.com/photos/210205/pexels-photo-210205.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                avatar:
+                  "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+                description: "Where modern beauty meets neo precision, comfort, confidence, and personalized care.",
+              }}
+              menuItems={[
+                {
+                  id: "transaction-history",
+                  label: "Transaction History",
+                  icon: <DocumentIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Transaction History clicked"),
+                },
+                {
+                  id: "bookmarks",
+                  label: "Bookmarks",
+                  icon: <BookmarkIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Bookmarks clicked"),
+                },  
+                {
+                  id: "edit-profile",
+                  label: "Edit Profile",
+                  icon: <EditIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => router.push("/profile/edit"),
+                },
+                {
+                  id: "log-out",
+                  label: "Log Out",
+                  icon: <LogoutIcon width={20} height={20} className="text-current" />,
+                  onClick: () => console.log("Log Out clicked"),
+                },
+              ]}
+              onViewProfile={() => router.push("/profile")}
+            />
   );
 
   return (

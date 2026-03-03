@@ -11,6 +11,7 @@ import SearchBar from "@/components/SearchBar";
 import TrendingServices from "@/components/TrendingServices";
 import { useAuth } from "@/contexts/AuthContext";
 import { DocumentIcon, BookmarkIcon, EditIcon, LogoutIcon, StarIcon } from "@/components/Icons";
+import UserInfoSideBar from "@/components/UserInfoSideBar";
 
 const mockBeauticians = [
   {
@@ -88,49 +89,46 @@ export default function BeauticiansPage() {
   ];
 
   const leftContent = (
-    <div className="space-y-6 md:block hidden">
-      {/* Compact profile card: banner + avatar + name + location + description + View Profile */}
-      <div className="bg-white rounded-xl shadow-sm border border-black/5 overflow-hidden">
-        <div className="relative h-28 sm:h-32 w-full bg-gradient-to-r from-primary/20 to-primary/10">
-          <Image
-            src="https://images.pexels.com/photos/210205/pexels-photo-210205.jpeg?auto=compress&cs=tinysrgb&w=800"
-            alt="Cover"
-            fill
-            className="object-cover"
-            unoptimized
-          />
-        </div>
-        <div className="relative px-4 pb-4">
-          <div className="relative -mt-12 flex justify-center sm:justify-start">
-            <div className="relative h-20 w-20 sm:h-24 sm:w-24 rounded-full overflow-hidden border-4 border-white shadow-lg bg-black/5">
-              <Image
-                src={user?.avatar || "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=400"}
-                alt="Profile"
-                fill
-                className="object-cover"
-                unoptimized
-              />
-            </div>
-          </div>
-          <h2 className="text-center sm:text-left font-semibold text-text-primary text-lg mt-3">
-            {user ? `${user.firstName} ${user.lastName}` : "Sara Chen"}
-          </h2>
-          <p className="text-center sm:text-left text-sm text-text-primary/60 mt-0.5">
-            Dhaka, Bangladesh
-          </p>
-          <p className="text-sm text-text-primary/70 mt-2 leading-relaxed">
-            Where modern beauty meets neo precision, comfort, confidence, and personalized care.
-          </p>
-          <Link
-            href="/profile"
-            className="mt-4 w-full inline-block text-center py-2.5 rounded-lg font-medium border-2 border-primary text-primary hover:bg-primary/5 transition-colors"
-          >
-            View Profile
-          </Link>
-        </div>
-      </div>
-      <ProfileMenuCard items={menuItems} />
-    </div>
+<UserInfoSideBar
+              role="user"
+              profile={{
+                name: "Sarah Johnson",
+                location: "Dhaka, Bangladesh",
+                distance: "4.5 km",
+                coverImage:
+                  "https://images.pexels.com/photos/210205/pexels-photo-210205.jpeg?auto=compress&cs=tinysrgb&w=1200",
+                avatar:
+                  "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop",
+                description: "Where modern beauty meets neo precision, comfort, confidence, and personalized care.",
+              }}
+              menuItems={[
+                {
+                  id: "transaction-history",
+                  label: "Transaction History",
+                  icon: <DocumentIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Transaction History clicked"),
+                },
+                {
+                  id: "bookmarks",
+                  label: "Bookmarks",
+                  icon: <BookmarkIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => console.log("Bookmarks clicked"),
+                },  
+                {
+                  id: "edit-profile",
+                  label: "Edit Profile",
+                  icon: <EditIcon width={20} height={20} fill="currentColor" />,
+                  onClick: () => router.push("/profile/edit"),
+                },
+                {
+                  id: "log-out",
+                  label: "Log Out",
+                  icon: <LogoutIcon width={20} height={20} className="text-current" />,
+                  onClick: () => console.log("Log Out clicked"),
+                },
+              ]}
+              onViewProfile={() => router.push("/profile")}
+            />
   );
 
   return (

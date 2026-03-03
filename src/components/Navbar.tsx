@@ -19,7 +19,7 @@ const roleNavItems: Record<UserRole, NavItem[]> = {
     { label: "Home", href: "/" },
     { label: "Services", href: "/services" },
     { label: "Beauticians", href: "/beauticians" },
-    { label: "My Bookings", href: "/bookings" },
+    { label: "Appointments", href: "/appointments" },
   ],
   parlor: [
     { label: "Dashboard", href: "/parlor" },
@@ -61,7 +61,9 @@ const menuItems = [
 function getCurrentRole(pathname: string): UserRole {
   if (pathname.startsWith("/admin")) return "admin";
   if (pathname.startsWith("/parlor")) return "parlor";
-  if (pathname.startsWith("/beautician")) return "beautician";
+  // Only treat `/beautician/...` detail/dashboard routes as beautician,
+  // keep `/beauticians` listing under the default user navigation.
+  if (pathname.startsWith("/beautician/")) return "beautician";
   return "user";
 }
 
