@@ -1,8 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import Container from "@/components/Container";
 import PageLayout from "@/components/PageLayout";
@@ -14,7 +13,7 @@ const DEFAULT_ARTIST_NAME = "Nila Akter";
 const DEFAULT_ARTIST_IMAGE = "https://images.pexels.com/photos/3760852/pexels-photo-3760852.jpeg?auto=compress&cs=tinysrgb&w=400";
 const DEFAULT_APPOINTMENT = "Dec 15, 2025 • 11:00 AM";
 
-export default function CheckoutPage() {
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { user, logout } = useAuth();
@@ -391,5 +390,24 @@ export default function CheckoutPage() {
         </div>
       )}
     </Container>
+  );
+}
+
+function CheckoutFallback() {
+  return (
+    <Container className="py-6 sm:py-8 mt-12">
+      <div className="animate-pulse space-y-6">
+        <div className="h-8 w-48 rounded-lg bg-black/10" />
+        <div className="h-64 rounded-xl bg-black/5" />
+      </div>
+    </Container>
+  );
+}
+
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={<CheckoutFallback />}>
+      <CheckoutContent />
+    </Suspense>
   );
 }

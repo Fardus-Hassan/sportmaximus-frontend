@@ -5,12 +5,22 @@ import { useRouter } from "next/navigation";
 import Container from "@/components/Container";
 import PageLayout from "@/components/PageLayout";
 import UserInfoSideBar from "@/components/UserInfoSideBar";
-import AppointmentCard from "@/components/AppointmentCard";
+import AppointmentCard, { type AppointmentStatus } from "@/components/AppointmentCard";
 import Pagination from "@/components/Pagination";
 import { useAuth } from "@/contexts/AuthContext";
 import { DocumentIcon, BookmarkIcon, EditIcon, LogoutIcon } from "@/components/Icons";
 
-const mockAppointments = [
+const mockAppointments: Array<{
+  id: string;
+  serviceName: string;
+  beauticianName: string;
+  beauticianAvatar: string;
+  parlorName: string;
+  date: string;
+  time: string;
+  paymentMethod: "card_payment" | "walk_in_pay" | "cash" | "cash_payment";
+  status: AppointmentStatus;
+}> = [
   {
     id: "apt-1",
     serviceName: "Gel Manicure",
