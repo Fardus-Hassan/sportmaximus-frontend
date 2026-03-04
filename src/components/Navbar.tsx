@@ -313,7 +313,7 @@ export default function Navbar() {
               </div>
 
               {/* Role Switcher (Demo) */}
-              <div className="p-2 border-t border-black/10 mt-2">
+              {/* <div className="p-2 border-t border-black/10 mt-2">
                 <p className="px-4 py-2 text-xs font-semibold text-text-primary/40 uppercase">Switch Role (Demo)</p>
                 <div className="space-y-1">
                   {(["user", "parlor", "beautician", "admin"] as UserRole[]).map((role) => (
@@ -332,7 +332,7 @@ export default function Navbar() {
                     </Link>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               {/* Menu Items */}
               <div className="p-2 border-t border-black/10 mt-2">
