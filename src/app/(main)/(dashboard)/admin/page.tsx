@@ -25,7 +25,7 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <RoleGuard allowedRoles={["admin"]} fallbackUrl="/">
+    <RoleGuard allowedRoles={["admin", "guest"]} fallbackUrl="/unauthorized">
       <Container className="py-8">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-text-primary">Admin Dashboard</h1>
