@@ -155,10 +155,10 @@ export default function UserInfoSideBar({
             <button
               key={item.id}
               onClick={item.onClick}
-              className="w-full flex items-center gap-3 p-4 text-left hover:bg-black/3 transition-colors"
+              className="group w-full flex items-center gap-3 p-4 text-left hover:bg-black/3 transition-colors"
             >
-              <div className="text-text-primary/50">{item.icon}</div>
-              <span className="text-sm font-medium text-text-primary">{item.label}</span>
+              <div className="text-text-primary/50 group-hover:text-primary transition-colors">{item.icon}</div>
+              <span className="text-sm font-medium text-text-primary group-hover:text-primary transition-colors">{item.label}</span>
             </button>
           ))}
         </div>
