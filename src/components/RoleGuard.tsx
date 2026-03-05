@@ -15,7 +15,7 @@ interface RoleGuardProps {
 export default function RoleGuard({
   children,
   allowedRoles,
-  fallbackUrl = "/auth/login",
+  fallbackUrl = "/admin",
   showLoading = true,
 }: RoleGuardProps) {
   const { role, isLoading, isAuthenticated } = useAuth();
