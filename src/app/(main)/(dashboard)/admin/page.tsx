@@ -4,9 +4,11 @@ import OverviewStats from "@/components/admin/OverviewStats";
 import RevenueStatsChart from "@/components/admin/RevenueStatsChart";
 import GrowthDonutChart from "@/components/admin/GrowthDonutChart";
 import ActivityTable from "@/components/admin/ActivityTable";
+import RoleGuard from "@/components/RoleGuard";
 
 export default function AdminDashboardOverview() {
   return (
+        <RoleGuard allowedRoles={["admin", "guest"]} fallbackUrl="/unauthorized">
     <div className="space-y-8 max-w-[1600px] mx-auto animate-in fade-in duration-700">
       {/* Header */}
       <div className="mb-8">
@@ -31,5 +33,6 @@ export default function AdminDashboardOverview() {
         <ActivityTable />
       </div>
     </div>
+    </RoleGuard>
   );
 }
