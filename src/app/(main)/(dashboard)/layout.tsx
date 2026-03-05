@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export default function DashboardLayout({
@@ -9,14 +9,19 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated, isLoading, role } = useAuth();
+  const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Allow /admin without login so you can view the page in browser during development
+  const isAdminRoute = pathname === "/admin";
+  const shouldRedirectToLogin = !isLoading && !isAuthenticated && !isAdminRoute;
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (shouldRedirectToLogin) {
       router.push("/auth/login");
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [shouldRedirectToLogin, router]);
 
   if (isLoading) {
     return (
@@ -26,7 +31,7 @@ export default function DashboardLayout({
     );
   }
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated && !isAdminRoute) {
     return null;
   }
 
