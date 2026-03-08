@@ -226,6 +226,36 @@ export interface LoginRequest {
   password: string;
 }
 
+/** Request body for POST /auth/forgot-password */
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+/** Request body for POST /auth/forgot-password/verify-otp */
+export interface ForgotPasswordVerifyOtpRequest {
+  email: string;
+  otpCode: string;
+}
+
+/** Request body for POST /auth/forgot-password/resend-otp */
+export interface ForgotPasswordResendOtpRequest {
+  email: string;
+}
+
+/** Request body for POST /auth/forgot-password/reset */
+export interface ForgotPasswordResetRequest {
+  resetToken: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+/** Response data for verify-otp (contains resetToken for next step) */
+export interface ForgotPasswordVerifyOtpResponse {
+  success: boolean;
+  message?: string;
+  data?: { resetToken?: string };
+}
+
 /** API response shape for sign-up (server returns data.user, data.accessToken) */
 export interface SignUpApiResponse {
   success: boolean;
