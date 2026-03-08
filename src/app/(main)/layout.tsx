@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import AuthGuard from "@/components/AuthGuard";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -16,17 +17,16 @@ export default function MainLayout({
     pathname.startsWith(prefix)
   );
 
-  // Dashboard pages: render without landing chrome
-  if (isDashboardRoute) {
-    return <>{children}</>;
-  }
+  const content =
+    isDashboardRoute ? (
+      <>{children}</>
+    ) : (
+      <div className="min-h-screen bg-gray-50 flex flex-col">
+        <Navbar />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+    );
 
-  // Landing pages: common layout (Navbar + Footer)
-  return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      <Navbar />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
-  );
+  return <AuthGuard>{content}</AuthGuard>;
 }
