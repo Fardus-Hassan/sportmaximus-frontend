@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Container from "@/components/Container";
+import { useAuth } from "@/contexts/AuthContext";
+import { useGetMeQuery } from "@/store/api/authApi";
 import { BellIcon, Logo, MailIcon, MenuIcon, StarIcon, LocationIcon, UserIcon, BookmarkIcon, EditIcon } from "@/components/Icons";
 
 type UserRole = "user" | "parlor" | "beautician" | "admin";
@@ -69,7 +71,12 @@ function getCurrentRole(pathname: string): UserRole {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { user: authUser, isAuthenticated, logout } = useAuth();
+  const { data: meUser } = useGetMeQuery(undefined, { skip: !isAuthenticated });
+  const displayUser = meUser ?? authUser;
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState<UserRole>("user");
 
   useEffect(() => {
@@ -133,7 +140,7 @@ export default function Navbar() {
           </nav>
 
           {/* Right: Actions */}
-          <div className="flex justify-end items-center gap-4 xl:w-[25%]">
+          <div className="flex justify-end items-center gap-4 xl:w-[30%]">
             {/* Role Badge */}
             {/* <div className="hidden lg:flex items-center gap-2">
               <span className={`px-3 py-1 rounded-full text-xs font-semibold capitalize ${
@@ -165,19 +172,50 @@ export default function Navbar() {
               </span>
             </button>
 
-            <Link
-              href="/auth/signup"
-              className="hidden sm:inline-flex text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
-            >
-              Sign Up
-            </Link>
-
-            <Link
-              href="/auth/login"
-              className="hidden sm:inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
-            >
-              Log In
-            </Link>
+            {isAuthenticated && displayUser ? (
+              <>
+                <div className="hidden sm:flex items-center gap-2 min-w-0 max-w-[180px]">
+                  {displayUser.avatar ? (
+                    <Image
+                      src={displayUser.avatar}
+                      alt={displayUser.firstName}
+                      width={32}
+                      height={32}
+                      className="w-8 h-8 rounded-full object-cover shrink-0"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <UserIcon width={18} height={18} className="text-primary" />
+                    </div>
+                  )}
+                  <span className="text-sm font-medium text-text-primary truncate">
+                    {displayUser.firstName} {displayUser.lastName}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setLogoutModalOpen(true)}
+                  className="hidden sm:inline-flex h-10 text-nowrap items-center justify-center rounded-full border border-black/15 px-4 text-sm font-medium text-text-primary hover:bg-black/5 transition-colors"
+                >
+                  Log out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/auth/choose-role"
+                  className="hidden sm:inline-flex text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
+                >
+                  Sign Up
+                </Link>
+                <Link
+                  href="/auth/login"
+                  className="hidden sm:inline-flex h-10 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-white hover:opacity-90 transition-opacity"
+                >
+                  Log In
+                </Link>
+              </>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -223,10 +261,10 @@ export default function Navbar() {
               <div className="bg-white rounded-lg overflow-hidden">
                 {/* Avatar */}
                 <div className="flex items-start gap-4">
-                  {mockProfile.avatar ? (
+                  {(isAuthenticated && displayUser ? displayUser.avatar : mockProfile.avatar) ? (
                     <Image
-                      src={mockProfile.avatar}
-                      alt={mockProfile.name}
+                      src={(isAuthenticated && displayUser ? displayUser.avatar : mockProfile.avatar) ?? ""}
+                      alt={isAuthenticated && displayUser ? `${displayUser.firstName} ${displayUser.lastName}` : mockProfile.name}
                       width={64}
                       height={64}
                       className="w-16 h-16 rounded-full object-cover border-2 border-primary/20"
@@ -238,10 +276,14 @@ export default function Navbar() {
                   )}
 
                   <div className="flex-1 pt-1">
-                    <h3 className="text-base font-bold text-text-primary">{mockProfile.name}</h3>
+                    <h3 className="text-base font-bold text-text-primary">
+                      {isAuthenticated && displayUser
+                        ? `${displayUser.firstName} ${displayUser.lastName}`
+                        : mockProfile.name}
+                    </h3>
 
-                    {/* Rating */}
-                    {mockProfile.rating && (
+                    {/* Rating - only for mock profile when not logged in */}
+                    {!isAuthenticated && mockProfile.rating && (
                       <div className="flex items-center gap-1 mt-1">
                         <StarIcon width={14} height={14} fill="#FFD700" />
                         <span className="text-xs text-text-primary">
@@ -251,7 +293,7 @@ export default function Navbar() {
                     )}
 
                     {/* Location */}
-                    {mockProfile.location && (
+                    {!isAuthenticated && mockProfile.location && (
                       <div className="flex items-center gap-1 mt-1">
                         <LocationIcon width={14} height={14} fill="#E32750" />
                         <span className="text-xs text-text-primary">
@@ -263,8 +305,8 @@ export default function Navbar() {
                   </div>
                 </div>
 
-                {/* Description */}
-                {mockProfile.description && (
+                {/* Description - only for mock when not logged in */}
+                {!isAuthenticated && mockProfile.description && (
                   <div className="mt-3 p-3 bg-black/3 rounded-lg">
                     <p className="text-xs text-text-primary/70 leading-relaxed">
                       {mockProfile.description}
@@ -272,16 +314,29 @@ export default function Navbar() {
                   </div>
                 )}
 
-                {/* View Profile Button */}
-                <button
-                  onClick={() => {
-                    console.log("View Profile");
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className="w-full mt-3 py-2 px-4 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/5 transition-colors"
-                >
-                  View Profile
-                </button>
+                {/* View Profile / Log out */}
+                {isAuthenticated ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setLogoutModalOpen(true);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full mt-3 py-2 px-4 rounded-lg border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 transition-colors"
+                  >
+                    Log out
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => {
+                      console.log("View Profile");
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full mt-3 py-2 px-4 rounded-lg border border-primary text-primary text-sm font-medium hover:bg-primary/5 transition-colors"
+                  >
+                    View Profile
+                  </button>
+                )}
               </div>
             </div>
 
@@ -356,20 +411,78 @@ export default function Navbar() {
 
             {/* Footer Actions */}
             <div className="p-4 border-t flex justify-center items-center border-black/10 shrink-0">
-              <Link
-                href="/auth/signup"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-center w-full rounded-lg text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
+              {isAuthenticated ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setLogoutModalOpen(true);
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className="block text-center w-full py-2.5 px-4 rounded-lg border border-red-200 text-red-600 text-sm font-medium hover:bg-red-50 transition-colors"
+                >
+                  Log out
+                </button>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/choose-role"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-center w-full rounded-lg text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
+                  >
+                    Sign Up
+                  </Link>
+                  <Link
+                    href="/auth/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-center py-2.5 px-4 w-full rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+                  >
+                    Log In
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Logout confirmation modal */}
+      {logoutModalOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/50 z-[100]"
+            aria-hidden
+            onClick={() => setLogoutModalOpen(false)}
+          />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="logout-modal-title"
+            className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[101] w-[90%] max-w-md bg-white rounded-xl shadow-xl p-6"
+          >
+            <h2 id="logout-modal-title" className="text-lg font-semibold text-text-primary mb-2">
+              Log out?
+            </h2>
+            <p className="text-sm text-text-primary/70 mb-6">
+              Are you sure you want to log out?
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                type="button"
+                onClick={() => setLogoutModalOpen(false)}
+                className="px-4 py-2.5 rounded-lg border border-black/15 text-sm font-medium text-text-primary hover:bg-black/5 transition-colors"
               >
-                Sign Up
-              </Link>
-              <Link
-                href="/auth/login"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-center py-2.5 px-4 w-full rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity"
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setLogoutModalOpen(false);
+                  logout();
+                }}
+                className="px-4 py-2.5 rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity"
               >
-                Log In
-              </Link>
+                Log out
+              </button>
             </div>
           </div>
         </>
