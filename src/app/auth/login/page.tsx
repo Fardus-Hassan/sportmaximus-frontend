@@ -1,18 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 import { Logo, EyeIcon, EyeOffIcon } from "@/components/Icons";
+import { useLoginMutation } from "@/store/api/authApi";
 
-export default function LoginPage() {
+function LoginForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
+
+  const [login, { isLoading, error }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const errorMessage =
+    error && "data" in error && typeof (error as { data?: { message?: string } }).data?.message === "string"
+      ? (error as { data: { message: string } }).data.message
+      : error && "data" in error && typeof (error as { data?: unknown }).data === "object"
+        ? (error as { data?: { message?: string } }).data?.message ?? "Login failed"
+        : "Login failed";
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login:", { email, password, rememberMe });
+    try {
+      await login({ email, password }).unwrap();
+      toast.success("Logged in successfully");
+      router.push(redirectTo.startsWith("/") ? redirectTo : "/");
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "data" in err && typeof (err as { data?: { message?: string } }).data?.message === "string"
+          ? (err as { data: { message: string } }).data.message
+          : "Login failed";
+      toast.error(msg);
+    }
   };
 
   return (
@@ -28,8 +53,14 @@ export default function LoginPage() {
         Log in to your account
       </h1>
       <p className="text-sm text-text-primary/70 text-center mb-8">
-        Welcome back Please enter your details.
+        Welcome back. Please enter your details.
       </p>
+
+      {error && (
+        <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -45,7 +76,8 @@ export default function LoginPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
             required
-            className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40"
+            disabled={isLoading}
+            className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 disabled:opacity-60"
           />
         </div>
 
@@ -62,7 +94,8 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
-              className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 pr-12"
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 pr-12 disabled:opacity-60"
             />
             <button
               type="button"
@@ -86,7 +119,8 @@ export default function LoginPage() {
               type="checkbox"
               checked={rememberMe}
               onChange={(e) => setRememberMe(e.target.checked)}
-              className="w-4 h-4 rounded border-black/20 text-primary focus:ring-primary"
+              disabled={isLoading}
+              className="w-4 h-4 rounded border-black/20 text-primary focus:ring-primary disabled:opacity-60"
             />
             <span className="text-sm text-text-primary">Remember me</span>
           </label>
@@ -101,19 +135,34 @@ export default function LoginPage() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+          disabled={isLoading}
+          className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Sign in
+          {isLoading ? "Signing in…" : "Sign in"}
         </button>
 
         {/* Sign Up Link */}
         <p className="text-center text-sm text-text-primary/70">
-          Didn&apos;t have an account?{" "}
-          <Link href="/auth/signup" className="font-medium text-primary hover:underline">
-            Sign Up
+          Don&apos;t have an account?{" "}
+          <Link href="/auth/choose-role" className="font-medium text-primary hover:underline">
+            Sign up
           </Link>
         </p>
       </form>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full flex items-center justify-center min-h-[200px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }

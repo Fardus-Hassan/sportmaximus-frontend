@@ -1,14 +1,30 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { Logo, KeyIcon } from "@/components/Icons";
+import { useForgotPasswordMutation } from "@/store/api/authApi";
 
 export default function ForgotPasswordPage() {
+  const router = useRouter();
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   const [email, setEmail] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Reset password for:", email);
+    try {
+      await forgotPassword({ email }).unwrap();
+      toast.success("Check your email for the verification code");
+      router.push(`/auth/forgot-password/verify-otp?email=${encodeURIComponent(email)}`);
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "data" in err && typeof (err as { data?: { message?: string } }).data?.message === "string"
+          ? (err as { data: { message: string } }).data.message
+          : "Failed to send reset email";
+      toast.error(msg);
+    }
   };
 
   return (
@@ -48,17 +64,25 @@ export default function ForgotPasswordPage() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
             required
-            className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40"
+            disabled={isLoading}
+            className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 disabled:opacity-60"
           />
         </div>
 
         {/* Reset Password Button */}
         <button
           type="submit"
-          className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+          disabled={isLoading}
+          className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Reset password
+          {isLoading ? "Sending…" : "Reset password"}
         </button>
+
+        <p className="text-center text-sm text-text-primary/70 mt-6">
+          <Link href="/auth/login" className="font-medium text-primary hover:underline">
+            Back to log in
+          </Link>
+        </p>
       </form>
     </div>
   );

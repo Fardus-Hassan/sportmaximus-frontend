@@ -1,7 +1,10 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useCallback, ReactNode } from "react";
-import { User, UserRole, LoginCredentials, SignupData, AuthResponse } from "@/types";
+import { useDispatch, useSelector } from "react-redux";
+import { User, UserRole, LoginCredentials, SignupData } from "@/types";
+import type { RootState } from "@/store";
+import { logout as logoutRedux, updateUser as updateUserRedux } from "@/store/slices/authSlice";
 
 // ============================================
 // AUTH CONTEXT TYPES
@@ -80,8 +83,13 @@ const MOCK_USERS: Record<string, User> = {
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const dispatch = useDispatch();
+  const reduxUser = useSelector((state: RootState) => state.auth.user);
+  const [localUser, setLocalUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Redux is source of truth when available; otherwise fallback to local state (e.g. mock login)
+  const user = reduxUser ?? localUser;
 
   // Derived state
   const role: UserRole = user?.role ?? "guest";
@@ -97,17 +105,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return allowedRoles.includes(role);
   }, [role]);
 
-  // Initialize auth state from localStorage
+  // Hydrate local state from localStorage only when Redux has no user (e.g. first load, or mock login)
   useEffect(() => {
+    if (reduxUser) {
+      setIsLoading(false);
+      return;
+    }
     const initAuth = async () => {
       try {
         const storedUser = localStorage.getItem("user");
         const storedToken = localStorage.getItem("accessToken");
-        
         if (storedUser && storedToken) {
-          // In production: validate token with API
-          // const response = await api.validateToken(storedToken);
-          setUser(JSON.parse(storedUser));
+          setLocalUser(JSON.parse(storedUser) as User);
         }
       } catch (error) {
         console.error("Auth initialization error:", error);
@@ -117,33 +126,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setIsLoading(false);
       }
     };
-
     initAuth();
-  }, []);
+  }, [reduxUser]);
 
-  // Login function
+  // Login function (mock for demo; replace with authApi login mutation when backend is ready)
   const login = async (credentials: LoginCredentials): Promise<void> => {
     setIsLoading(true);
     try {
-      // TODO: Replace with actual API call
-      // const response = await api.post<AuthResponse>('/auth/login', credentials);
-      
-      // Mock login - determine role from email for demo
-      const mockRole = credentials.email.includes("admin") ? "admin" 
+      const mockRole = credentials.email.includes("admin") ? "admin"
         : credentials.email.includes("parlor") ? "parlor"
         : credentials.email.includes("beautician") ? "beautician"
         : "user";
-      
       const mockUser = MOCK_USERS[mockRole];
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      // Store in localStorage
+      await new Promise((r) => setTimeout(r, 500));
       localStorage.setItem("user", JSON.stringify(mockUser));
       localStorage.setItem("accessToken", "mock-token-" + mockRole);
-      
-      setUser(mockUser);
+      setLocalUser(mockUser);
     } catch (error) {
       console.error("Login error:", error);
       throw error;
@@ -152,51 +150,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Signup function
-  const signup = async (data: SignupData): Promise<void> => {
-    setIsLoading(true);
-    try {
-      // TODO: Replace with actual API call
-      // const response = await api.post<AuthResponse>('/auth/signup', data);
-      
-      const newUser: User = {
-        id: "new-user-" + Date.now(),
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        role: data.role,
-        createdAt: new Date().toISOString(),
-      };
-      
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      localStorage.setItem("user", JSON.stringify(newUser));
-      localStorage.setItem("accessToken", "mock-token-" + newUser.id);
-      
-      setUser(newUser);
-    } catch (error) {
-      console.error("Signup error:", error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
+  // Signup: use Redux authApi.useSignUpMutation in the signup page; context stays in sync via Redux state
+  const signup = async (_data: SignupData): Promise<void> => {
+    throw new Error("Use sign-up page with Redux useSignUpMutation");
   };
 
-  // Logout function
+  // Logout: clear Redux and local state
   const logout = () => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    setUser(null);
+    dispatch(logoutRedux());
+    setLocalUser(null);
   };
 
   // Update user function
   const updateUser = (updates: Partial<User>) => {
     if (user) {
       const updatedUser = { ...user, ...updates };
-      localStorage.setItem("user", JSON.stringify(updatedUser));
-      setUser(updatedUser);
+      if (reduxUser) {
+        dispatch(updateUserRedux(updates));
+      } else {
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+        setLocalUser(updatedUser);
+      }
     }
   };
 

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Logo } from "@/components/Icons";
 
-type Role = "user" | "beautician" | "assistant" | "manager";
+type Role = "user" | "beautician" | "manager";
 
 interface RoleOption {
   id: Role;
@@ -24,11 +25,6 @@ const roles: RoleOption[] = [
     description: "Nail tech, stylist, barber",
   },
   {
-    id: "assistant",
-    title: "Assistant",
-    description: "Support beautician",
-  },
-  {
     id: "manager",
     title: "Manager",
     description: "Salon oversight",
@@ -36,13 +32,11 @@ const roles: RoleOption[] = [
 ];
 
 export default function ChooseRolePage() {
-  const [selectedRole, setSelectedRole] = useState<Role>("beautician");
+  const [selectedRole, setSelectedRole] = useState<Role>("user");
   const router = useRouter();
 
-  const handleNext = () => {
-    console.log("Selected role:", selectedRole);
-    // Navigate to next step based on role
-    router.push("/auth/login");
+  const goToSignUp = () => {
+    router.push(`/auth/signup?role=${selectedRole}`);
   };
 
   return (
@@ -58,11 +52,11 @@ export default function ChooseRolePage() {
         Choose Your Role
       </h1>
       <p className="text-sm text-text-primary/70 text-center mb-8">
-        Welcome back Please enter your details.
+        Select your role, then log in or sign up.
       </p>
 
       {/* Role Selection Grid */}
-      <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         {roles.map((role) => {
           const isSelected = selectedRole === role.id;
           return (
@@ -102,14 +96,20 @@ export default function ChooseRolePage() {
         })}
       </div>
 
-      {/* Next Button */}
       <button
         type="button"
-        onClick={handleNext}
+        onClick={goToSignUp}
         className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity"
       >
-        Next
+        Sign up
       </button>
+
+      <p className="text-center text-sm text-text-primary/70 mt-6">
+        Already have an account?{" "}
+        <Link href="/auth/login" className="font-medium text-primary hover:underline">
+          Log in
+        </Link>
+      </p>
     </div>
   );
 }
