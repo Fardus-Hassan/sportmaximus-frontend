@@ -2,7 +2,7 @@
 // USER & ROLE TYPES
 // ============================================
 
-export type UserRole = "guest" | "user" | "parlor" | "beautician" | "admin";
+export type UserRole = "guest" | "user" | "parlor" | "beautician" | "manager" | "admin";
 
 export interface User {
   id: string;
@@ -209,10 +209,51 @@ export interface SignupData {
   referralCode?: string;
 }
 
+/** Request body for POST /auth/sign-up */
+export interface SignUpRequest {
+  role: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  agreeToTerms: boolean;
+}
+
+/** Request body for POST /auth/login */
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+/** API response shape for sign-up (server returns data.user, data.accessToken) */
+export interface SignUpApiResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    user: {
+      id: string;
+      firstName: string;
+      lastName: string;
+      name: string;
+      email: string;
+      role: string;
+      image: string | null;
+      status: string;
+      agreedToTerms: boolean;
+      createdAt: string;
+      updatedAt: string;
+    };
+    accessToken: string;
+    message?: string;
+  };
+}
+
 export interface AuthResponse {
   user: User;
   accessToken: string;
-  refreshToken: string;
+  refreshToken?: string;
 }
 
 // ============================================

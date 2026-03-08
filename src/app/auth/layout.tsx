@@ -14,7 +14,7 @@ export default function AuthLayout({
             {/* Left Side - Image (Same for all auth pages) */}
             <div className="hidden lg:block lg:w-1/2 relative h-[80vh] rounded-2xl">
               <Image
-                src="https://images.pexels.com/photos/2533266/pexels-photo-2533266.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="/auth.jpg"
                 alt="Beauty Service"
                 fill
                 className="object-cover rounded-2xl"

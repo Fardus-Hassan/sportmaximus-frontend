@@ -1,30 +1,68 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Logo, EyeIcon, EyeOffIcon } from "@/components/Icons";
+import { useSignUpMutation } from "@/store/api/authApi";
 
-export default function SignupPage() {
+const VALID_ROLES = ["user", "beautician", "manager"] as const;
+const ROLE_LABEL: Record<string, string> = {
+  user: "User",
+  beautician: "Beautician",
+  manager: "Manager",
+};
+
+function SignupForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const roleParam = searchParams.get("role") || "user";
+  const role = VALID_ROLES.includes(roleParam as (typeof VALID_ROLES)[number])
+    ? (roleParam as (typeof VALID_ROLES)[number])
+    : "user";
+  const roleLabel = ROLE_LABEL[role] ?? "User";
+
+  const [signUp, { isLoading, error }] = useSignUpMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    referralNumber: "",
     password: "",
     confirmPassword: "",
   });
   const [agreeToTerms, setAgreeToTerms] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signup:", { ...formData, agreeToTerms });
+    if (!agreeToTerms) return;
+    try {
+      await signUp({
+        role,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
+        agreeToTerms,
+      }).unwrap();
+      router.push("/");
+    } catch {
+      // Error shown via mutation.error
+    }
   };
 
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
+
+  const errorMessage =
+    error && "data" in error && typeof (error as { data?: { message?: string } }).data?.message === "string"
+      ? (error as { data: { message: string } }).data.message
+      : error && "data" in error && typeof (error as { data?: unknown }).data === "object"
+        ? (error as { data?: { message?: string } }).data?.message ?? "Sign up failed"
+        : "Sign up failed";
 
   return (
     <div className="w-full">
@@ -38,9 +76,19 @@ export default function SignupPage() {
       <h1 className="text-2xl font-bold text-text-primary text-center mb-2">
         Create New Account
       </h1>
-      <p className="text-sm text-text-primary/70 text-center mb-8">
-        Please enter details
+      <p className="text-sm text-text-primary/70 text-center mb-2">
+        Please enter your details.
       </p>
+      <p className="text-sm text-primary font-medium text-center mb-6">
+        Signing up as {roleLabel}
+      </p>
+
+      {/* Error message */}
+      {error && (
+        <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+          {errorMessage}
+        </div>
+      )}
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -57,7 +105,8 @@ export default function SignupPage() {
               onChange={(e) => handleChange("firstName", e.target.value)}
               placeholder="Enter your First name"
               required
-              className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40"
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 disabled:opacity-60"
             />
           </div>
           <div>
@@ -71,7 +120,8 @@ export default function SignupPage() {
               onChange={(e) => handleChange("lastName", e.target.value)}
               placeholder="Enter your Last name"
               required
-              className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40"
+              disabled={isLoading}
+              className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 disabled:opacity-60"
             />
           </div>
         </div>
@@ -88,22 +138,8 @@ export default function SignupPage() {
             onChange={(e) => handleChange("email", e.target.value)}
             placeholder="Enter your email"
             required
-            className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40"
-          />
-        </div>
-
-        {/* Referral Number */}
-        <div>
-          <label htmlFor="referralNumber" className="block text-sm font-medium text-text-primary mb-2">
-            Enter Referral number(if any)
-          </label>
-          <input
-            id="referralNumber"
-            type="text"
-            value={formData.referralNumber}
-            onChange={(e) => handleChange("referralNumber", e.target.value)}
-            placeholder="Enter your email"
-            className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40"
+            disabled={isLoading}
+            className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 disabled:opacity-60"
           />
         </div>
 
@@ -121,7 +157,8 @@ export default function SignupPage() {
                 onChange={(e) => handleChange("password", e.target.value)}
                 placeholder="Enter your password"
                 required
-                className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 pr-12"
+                disabled={isLoading}
+                className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 pr-12 disabled:opacity-60"
               />
               <button
                 type="button"
@@ -149,7 +186,8 @@ export default function SignupPage() {
                 onChange={(e) => handleChange("confirmPassword", e.target.value)}
                 placeholder="Confirm your password"
                 required
-                className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 pr-12"
+                disabled={isLoading}
+                className="w-full px-4 py-3 border border-black/10 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40 text-text-primary placeholder:text-text-primary/40 pr-12 disabled:opacity-60"
               />
               <button
                 type="button"
@@ -174,12 +212,13 @@ export default function SignupPage() {
               type="checkbox"
               checked={agreeToTerms}
               onChange={(e) => setAgreeToTerms(e.target.checked)}
+              disabled={isLoading}
               className="w-4 h-4 rounded border-black/20 text-primary focus:ring-primary"
             />
             <span className="text-sm text-text-primary">
               I agree to the{" "}
               <Link
-                href="/auth/terms"
+                href="/terms-of-use"
                 className="font-medium text-primary hover:underline"
               >
                 Terms & Conditions
@@ -191,11 +230,33 @@ export default function SignupPage() {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity"
+          disabled={isLoading || !agreeToTerms}
+          className="w-full bg-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          Sign in
+          {isLoading ? "Creating account…" : "Create account"}
         </button>
+
+        <p className="text-center text-sm text-text-primary/70 mt-4">
+          Already have an account?{" "}
+          <Link href={`/auth/login?role=${role}`} className="font-medium text-primary hover:underline">
+            Log in
+          </Link>
+        </p>
       </form>
     </div>
+  );
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full flex items-center justify-center min-h-[200px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
+        </div>
+      }
+    >
+      <SignupForm />
+    </Suspense>
   );
 }

@@ -4,7 +4,10 @@ import { ApiResponse, ApiError, PaginatedResponse } from "@/types";
 // API CONFIGURATION
 // ============================================
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api";
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_API_BASE_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://206.162.244.175:5007/api/v1";
 
 interface RequestConfig extends RequestInit {
   params?: Record<string, string | number | boolean | undefined>;

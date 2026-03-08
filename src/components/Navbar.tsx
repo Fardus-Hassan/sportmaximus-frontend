@@ -166,7 +166,7 @@ export default function Navbar() {
             </button>
 
             <Link
-              href="/auth/signup"
+              href="/auth/choose-role"
               className="hidden sm:inline-flex text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
             >
               Sign Up
@@ -357,7 +357,7 @@ export default function Navbar() {
             {/* Footer Actions */}
             <div className="p-4 border-t flex justify-center items-center border-black/10 shrink-0">
               <Link
-                href="/auth/signup"
+                href="/auth/choose-role"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block text-center w-full rounded-lg text-sm font-medium text-text-primary/70 hover:text-text-primary transition-colors"
               >
