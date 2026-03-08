@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import Toaster from "@/components/Toaster";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ReduxProvider } from "@/components/providers/ReduxProvider";
 
@@ -32,6 +33,7 @@ export default function RootLayout({
           <AuthProvider>
             <SmoothScroll />
             {children}
+            <Toaster />
           </AuthProvider>
         </ReduxProvider>
       </body>

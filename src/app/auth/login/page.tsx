@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { Logo, EyeIcon, EyeOffIcon } from "@/components/Icons";
 import { useLoginMutation } from "@/store/api/authApi";
 
@@ -25,9 +26,14 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       await login({ email, password }).unwrap();
+      toast.success("Logged in successfully");
       router.push("/");
-    } catch {
-      // Error shown via mutation.error
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "data" in err && typeof (err as { data?: { message?: string } }).data?.message === "string"
+          ? (err as { data: { message: string } }).data.message
+          : "Login failed";
+      toast.error(msg);
     }
   };
 

@@ -3,6 +3,7 @@
 import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 import { Logo, EyeIcon, EyeOffIcon } from "@/components/Icons";
 import { useSignUpMutation } from "@/store/api/authApi";
 
@@ -47,9 +48,14 @@ function SignupForm() {
         confirmPassword: formData.confirmPassword,
         agreeToTerms,
       }).unwrap();
+      toast.success("Account created successfully");
       router.push("/");
-    } catch {
-      // Error shown via mutation.error
+    } catch (err: unknown) {
+      const msg =
+        err && typeof err === "object" && "data" in err && typeof (err as { data?: { message?: string } }).data?.message === "string"
+          ? (err as { data: { message: string } }).data.message
+          : "Sign up failed";
+      toast.error(msg);
     }
   };
 
