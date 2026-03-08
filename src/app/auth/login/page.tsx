@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { Logo, EyeIcon, EyeOffIcon } from "@/components/Icons";
 import { useLoginMutation } from "@/store/api/authApi";
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
+
   const [login, { isLoading, error }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
@@ -27,7 +30,7 @@ export default function LoginPage() {
     try {
       await login({ email, password }).unwrap();
       toast.success("Logged in successfully");
-      router.push("/");
+      router.push(redirectTo.startsWith("/") ? redirectTo : "/");
     } catch (err: unknown) {
       const msg =
         err && typeof err === "object" && "data" in err && typeof (err as { data?: { message?: string } }).data?.message === "string"
@@ -147,5 +150,19 @@ export default function LoginPage() {
         </p>
       </form>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="w-full flex items-center justify-center min-h-[200px]">
+          <div className="animate-spin rounded-full h-8 w-8 border-2 border-primary border-t-transparent" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   );
 }
